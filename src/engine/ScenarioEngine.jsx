@@ -13,23 +13,26 @@ function ScenarioEngine({ scenario, party, onUpdateParty, onRestart, initialNode
     onNodeChange?.(nodeId)
   }
 
+  function applyAndNavigate(effect, nextNodeId) {
+    const nextParty = effect ? applyEffect(effect, party) : party
+    if (effect) onUpdateParty(nextParty)
+
+    const wiped = nextParty.length > 0 && nextParty.every((m) => m.hp <= 0)
+    goTo(wiped && scenario.nodes.party_wiped ? 'party_wiped' : nextNodeId)
+  }
+
   function choose(choice) {
     if (choice.roll) {
       const { sides, target, successNode, failNode, successEffect, failEffect } = choice.roll
       const result = rollDie(sides)
       const success = result >= target
-      if (success && successEffect) onUpdateParty(applyEffect(successEffect, party))
-      if (!success && failEffect) onUpdateParty(applyEffect(failEffect, party))
       setLastRoll({ result, sides, target, success })
-      goTo(success ? successNode : failNode)
+      applyAndNavigate(success ? successEffect : failEffect, success ? successNode : failNode)
       return
     }
 
     setLastRoll(null)
-    if (choice.effect) {
-      onUpdateParty(applyEffect(choice.effect, party))
-    }
-    goTo(choice.nextNode)
+    applyAndNavigate(choice.effect, choice.nextNode)
   }
 
   return (

@@ -95,6 +95,12 @@
       "text": "Inside the chest: a stash of gold and a masterwork dagger. Tutorial complete — you've learned the basics: combat, traps, fleeing, and magic.",
       "choices": [],
       "isEnd": true
+    },
+    "party_wiped": {
+      "id": "party_wiped",
+      "text": "Your entire party has fallen. Four Against Darkness is unforgiving that way — but every defeat is a lesson for the next attempt.",
+      "choices": [],
+      "isEnd": true
     }
   }
 }

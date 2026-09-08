@@ -4,6 +4,16 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #9 — Fallen-Party (Game Over) Handling
+- `ScenarioEngine` now detects a full party wipe (every member at 0 HP) after
+  any `effect` resolves and routes to a dedicated `party_wiped` end node
+  instead of the choice's normal destination, if the active scenario defines
+  one. Added `party_wiped` to `src/data/scenarios/intro.json`.
+- `applyEffect`'s random-target selection already excluded fallen (0 HP)
+  members from being re-targeted — confirmed via a seeded-party test rather
+  than changed, since it was already correct.
+- Second P4 item done; `backlog.md` and `CHANGELOG.md` updated.
+
 ### PR #8 — Dice-Roll Combat Resolution
 - The goblin room's "Fight them" choice now resolves with a real d6 roll
   (needs 4+) instead of an automatic narrative win, via a new `choice.roll`
