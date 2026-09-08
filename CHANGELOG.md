@@ -4,6 +4,19 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #7 — Session Persistence
+- Added `src/utils/storage.js` (`loadSession`/`saveSession`/`clearSession`,
+  wrapped in try/catch for private-browsing/quota safety).
+- `App.jsx` now initializes `phase`, `party`, and the scenario's current node
+  from `localStorage` and persists them on every change, so an in-progress
+  party or scenario position survives a page reload.
+- `ScenarioEngine` accepts optional `initialNodeId`/`onNodeChange` props
+  (backward compatible — falls back to internal state) so `App.jsx` can
+  control and persist the current node.
+- Marks all of P0–P3 complete in `backlog.md`; added a new P4 tier for
+  follow-up work (real dice-roll resolution, fallen-party handling, a
+  second scenario, automated tests, the Vite 8 upgrade).
+
 ### PR #6 — GitHub Pages Deployment
 - Added `.github/workflows/deploy.yml`: builds with `npm ci && npm run build`
   and publishes `dist/` to GitHub Pages via `actions/deploy-pages` on every
