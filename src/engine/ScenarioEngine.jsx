@@ -1,22 +1,46 @@
 import { useState } from 'react'
 import PartyTracker from '../components/PartyTracker.jsx'
 import { applyEffect } from './applyEffect.js'
+import { rollDie } from '../utils/dice.js'
 
 function ScenarioEngine({ scenario, party, onUpdateParty, onRestart, initialNodeId, onNodeChange }) {
   const [currentNodeId, setCurrentNodeId] = useState(initialNodeId ?? scenario.startNode)
+  const [lastRoll, setLastRoll] = useState(null)
   const node = scenario.nodes[currentNodeId]
 
+  function goTo(nodeId) {
+    setCurrentNodeId(nodeId)
+    onNodeChange?.(nodeId)
+  }
+
   function choose(choice) {
+    if (choice.roll) {
+      const { sides, target, successNode, failNode, successEffect, failEffect } = choice.roll
+      const result = rollDie(sides)
+      const success = result >= target
+      if (success && successEffect) onUpdateParty(applyEffect(successEffect, party))
+      if (!success && failEffect) onUpdateParty(applyEffect(failEffect, party))
+      setLastRoll({ result, sides, target, success })
+      goTo(success ? successNode : failNode)
+      return
+    }
+
+    setLastRoll(null)
     if (choice.effect) {
       onUpdateParty(applyEffect(choice.effect, party))
     }
-    setCurrentNodeId(choice.nextNode)
-    onNodeChange?.(choice.nextNode)
+    goTo(choice.nextNode)
   }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
       <div className="border border-ink-400 p-4 space-y-4">
+        {lastRoll && (
+          <p className={`text-sm ${lastRoll.success ? 'text-green-700' : 'text-red-700'}`}>
+            🎲 Rolled {lastRoll.result} on d{lastRoll.sides} (needed {lastRoll.target}+) —{' '}
+            {lastRoll.success ? 'Success!' : 'Failure.'}
+          </p>
+        )}
         <p className="leading-relaxed">{node.text}</p>
 
         {node.isEnd ? (

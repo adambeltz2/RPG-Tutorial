@@ -34,7 +34,16 @@
       "id": "goblin_room",
       "text": "Two goblins turn and snarl at you. They are Level 3 minions. Combat, bribery, and fleeing are all valid tactics — Four Against Darkness rewards good judgement over brute force.",
       "choices": [
-        { "label": "Fight them (Roll Attack)", "nextNode": "goblin_fight_resolution" },
+        {
+          "label": "Fight them (Roll Attack)",
+          "roll": {
+            "sides": 6,
+            "target": 4,
+            "successNode": "goblin_fight_resolution",
+            "failNode": "goblin_fight_setback",
+            "failEffect": { "hpDelta": -1, "target": "random" }
+          }
+        },
         { "label": "Bribe them (Costs 10 Gold)", "nextNode": "goblin_bribe_success", "effect": { "goldDelta": -10 } },
         { "label": "Flee back down the corridor", "nextNode": "goblin_flee" }
       ]
@@ -42,6 +51,13 @@
     "goblin_fight_resolution": {
       "id": "goblin_fight_resolution",
       "text": "You roll to attack and the goblins fall before your blades! The path ahead is clear.",
+      "choices": [
+        { "label": "Continue to the treasure room", "nextNode": "treasure_room" }
+      ]
+    },
+    "goblin_fight_setback": {
+      "id": "goblin_fight_setback",
+      "text": "Your attack goes wide and a goblin's blade catches one of your heroes before you finish them off. Combat always carries risk — that's why bribery and fleeing are on the table too.",
       "choices": [
         { "label": "Continue to the treasure room", "nextNode": "treasure_room" }
       ]

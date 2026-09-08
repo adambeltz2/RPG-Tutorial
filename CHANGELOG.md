@@ -4,6 +4,17 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #8 — Dice-Roll Combat Resolution
+- The goblin room's "Fight them" choice now resolves with a real d6 roll
+  (needs 4+) instead of an automatic narrative win, via a new `choice.roll`
+  schema (`sides`, `target`, `successNode`/`failNode`, optional
+  `successEffect`/`failEffect`) resolved in `ScenarioEngine.choose()`.
+- Added a `goblin_fight_setback` node for the failure branch (a random party
+  member takes 1 HP damage but the story continues to the treasure room).
+- `ScenarioEngine` shows a "🎲 Rolled N on dS (needed T+) — Success!/Failure."
+  banner above the node text after a roll, colored green/red.
+- First tier P4 item done; `backlog.md` and `CHANGELOG.md` updated.
+
 ### PR #7 — Session Persistence
 - Added `src/utils/storage.js` (`loadSession`/`saveSession`/`clearSession`,
   wrapped in try/catch for private-browsing/quota safety).

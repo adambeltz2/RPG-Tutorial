@@ -45,11 +45,11 @@ All four original priority tiers (P0–P3) are complete. The items below are
 follow-ups discovered along the way, now organized as the next tier.
 
 ## P4 — Depth & Robustness
-- [ ] [FEATURE] Real dice-roll resolution for combat choices (e.g. a d6
+- [x] [FEATURE] Real dice-roll resolution for combat choices (e.g. a d6
   roll-under/roll-over vs. a target number, shown to the player) instead of
   narrative-only "you roll to attack and win" outcomes. Affected files:
   `src/engine/ScenarioEngine.jsx`, `src/utils/dice.js`,
-  `src/data/scenarios/intro.json`.
+  `src/data/scenarios/intro.json`. (PR #8)
 - [ ] [BUG] If a party member's HP reaches 0 there's no "fallen" handling
   beyond the strikethrough name in `PartyTracker` — no game-over state or
   exclusion from further random-target effects. Affected files:
@@ -77,6 +77,12 @@ they're discovered, instead of being implemented ad hoc.)_
   choices can actually move the needle on HP/gold, not just branch narrative.
   Introduced in PR #4; consider promoting this to a documented part of the
   scenario data structure in CLAUDE.md if more scenarios adopt it.
+- [FEATURE] Choices can also carry a `choice.roll` (`sides`, `target`,
+  `successNode`/`failNode`, optional `successEffect`/`failEffect`) resolved
+  in `ScenarioEngine.choose()` — a second schema extension (alongside
+  `choice.effect`) so a choice can branch on a real dice roll instead of a
+  fixed `nextNode`. Introduced in PR #8; worth documenting in CLAUDE.md
+  alongside `choice.effect` if a third scenario schema extension shows up.
 - [DEBT] GitHub Pages hosting (Settings → Pages) needs its Source set to
   "GitHub Actions" for `.github/workflows/deploy.yml` to actually publish —
   this is a one-time repo setting, not something a PR can change. Flagged
