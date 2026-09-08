@@ -15,9 +15,12 @@ and deploys as a static site (e.g. GitHub Pages).
 - **Static JSON/Markdown** — scenario content, no backend database
 
 ## Status
-Early scaffolding stage — see `backlog.md` for the prioritized build order.
-Current focus is the Character Creation Wizard (`PartyBuilder`,
-class selection, starting-gold roller, `EquipmentShop`).
+Both application phases are functional end-to-end: the Character Creation
+Wizard (`PartyBuilder`, class selection, starting-gold roller,
+`EquipmentShop`) and the Scenario Engine (`ScenarioEngine`, `PartyTracker`,
+and an introductory tutorial scenario covering combat, traps, fleeing, and
+magic). See `backlog.md` for what's next (P3: theming, deployment,
+persistence) and `CHANGELOG.md` for a per-PR history.
 
 ## Getting Started
 ```bash
@@ -40,3 +43,4 @@ Development follows `CLAUDE.md`:
 - All changes land via pull request — no direct pushes to `main`.
 - New feature ideas, edge cases, or non-critical bugs found along the way are
   logged in `backlog.md` rather than built ad hoc.
+- Each merged PR gets an entry in `CHANGELOG.md`.
