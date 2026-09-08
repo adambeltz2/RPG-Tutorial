@@ -20,9 +20,10 @@ Creation Wizard (`PartyBuilder`, class selection, starting-gold roller,
 `EquipmentShop`), the Scenario Engine (`ScenarioEngine`, `PartyTracker`, and
 an introductory tutorial scenario covering combat, traps, fleeing, and
 magic), a terminal/parchment visual theme, a GitHub Pages deploy workflow,
-and `localStorage` session persistence across reloads. See `backlog.md` for
-what's next (P4: dice-roll combat resolution, fallen-party handling, more
-scenario content) and `CHANGELOG.md` for a per-PR history.
+`localStorage` session persistence across reloads, and real d6 dice-roll
+resolution for the combat choice. See `backlog.md` for what's next
+(P4: fallen-party handling, more scenario content, automated tests) and
+`CHANGELOG.md` for a per-PR history.
 
 ## Getting Started
 ```bash
