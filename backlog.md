@@ -71,11 +71,17 @@ follow-ups discovered along the way, now organized as the next tier.
   wired `npm test` into both a new PR-gating CI workflow and the deploy
   workflow. Manual Playwright browser runs remain the process for UI/flow
   verification per PR — this covers the pure-logic layer only.)
-- [ ] [DEBT] `npm audit` flags a moderate esbuild dev-server advisory via the
+- [x] [DEBT] `npm audit` flags a moderate esbuild dev-server advisory via the
   Vite 5 toolchain; the only fix is a breaking Vite 8 upgrade
   (`npm audit fix --force`). Dev-server-only exposure, low risk for this
   personal-use project — revisit as its own dedicated PR given the breaking
-  change. Affected files: `package.json`.
+  change. Affected files: `package.json`. (PR #12 — upgraded to Vite 8.2.2,
+  `@vitejs/plugin-react` 5.2.0, and Vitest 5.0.0; kept Tailwind CSS on 3.x
+  since Tailwind 4 is a separate breaking rewrite out of scope here.
+  `npm audit` now reports 0 vulnerabilities.)
+
+All P0–P4 backlog items are complete as of PR #12. Future work starts fresh
+in "Unscheduled / Ideas" below until a new priority tier is organized.
 
 ## Unscheduled / Ideas
 _(New feature ideas, edge cases, and non-critical bugs get logged here as
@@ -96,3 +102,9 @@ they're discovered, instead of being implemented ad hoc.)_
   "GitHub Actions" for `.github/workflows/deploy.yml` to actually publish —
   this is a one-time repo setting, not something a PR can change. Flagged
   in PR #6 for the repo owner to enable.
+- [DEBT] Tailwind CSS is still on 3.x; Tailwind 4 is a separate breaking
+  rewrite (CSS-based config via `@import "tailwindcss"` instead of
+  `tailwind.config.js` + PostCSS plugins) deliberately left out of the
+  Vite 8 upgrade (PR #12) to keep that change focused. Worth its own PR
+  later. Affected files: `tailwind.config.js`, `postcss.config.js`,
+  `src/index.css`, `package.json`.

@@ -23,8 +23,10 @@ magic, now with a fork, a flee-and-retry loop, and a fallen-party game-over
 state), a terminal/parchment visual theme, a GitHub Pages deploy workflow,
 `localStorage` session persistence across reloads, and real d6 dice-roll
 resolution for the combat choice. Unit tests (Vitest) cover the pure logic
-modules and gate CI on every PR. See `backlog.md` for what's next (the
-Vite 8 upgrade) and `CHANGELOG.md` for a per-PR history.
+modules and gate CI on every PR. The toolchain is current (Vite 8, `npm
+audit` clean) and every item in the original P0–P4 backlog is done — see
+`backlog.md`'s "Unscheduled / Ideas" for what's next, and `CHANGELOG.md`
+for a per-PR history.
 
 ## Getting Started
 ```bash
