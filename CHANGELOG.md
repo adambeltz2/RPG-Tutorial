@@ -4,6 +4,15 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #12 — Vite 8 Upgrade
+- Upgraded `vite` (^5.4.11 → ^8.2.2), `@vitejs/plugin-react` (^4.3.4 →
+  ^5.2.0), and `vitest` (^3.2.6 → ^5.0.0), resolving the moderate esbuild
+  dev-server advisory that was the last remaining `npm audit` finding.
+  `npm audit` now reports 0 vulnerabilities.
+- Deliberately left Tailwind CSS on 3.x — Tailwind 4 is a separate breaking
+  config rewrite, logged as its own follow-up in `backlog.md`.
+- Last item in the P4 tier done — all of P0–P4 are now complete.
+
 ### PR #11 — Automated Tests (Vitest)
 - Added `vitest` (pinned to `^3.2.6` — the first release patching a
   critical Vitest UI-server RCE advisory that affects `^2.x`/earlier `^3.x`,
