@@ -1,0 +1,42 @@
+# Four Against Darkness — Web Tutorial System
+
+A lightweight, purely client-side web app that acts as an interactive tutorial
+for the solo/co-op tabletop RPG **Four Against Darkness**. It walks a new
+player through building a party of four and running an introductory
+"Choose Your Own Adventure" style scenario, without needing the rulebook.
+
+Built for personal use, runs entirely in the browser (no backend/database),
+and deploys as a static site (e.g. GitHub Pages).
+
+## Tech Stack
+- **React** — UI and party/scenario state management
+- **Vite** — dev server and static build/export
+- **Tailwind CSS** — terminal/parchment styling
+- **Static JSON/Markdown** — scenario content, no backend database
+
+## Status
+Early scaffolding stage — see `backlog.md` for the prioritized build order.
+Current focus is the Character Creation Wizard (`PartyBuilder`,
+class selection, starting-gold roller, `EquipmentShop`).
+
+## Getting Started
+```bash
+npm install
+npm run dev      # start the Vite dev server
+npm run build    # produce a static production build
+```
+
+## Project Structure
+```
+src/
+  components/   # PartyBuilder, ClassSelector, EquipmentShop, PartyTracker
+  engine/       # Scenario state machine
+  data/         # Scenario node JSON
+```
+
+## Contributing / Development Workflow
+Development follows `CLAUDE.md`:
+- Work is tracked and prioritized in `backlog.md`.
+- All changes land via pull request — no direct pushes to `main`.
+- New feature ideas, edge cases, or non-critical bugs found along the way are
+  logged in `backlog.md` rather than built ad hoc.
