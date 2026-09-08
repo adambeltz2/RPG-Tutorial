@@ -50,11 +50,11 @@ follow-ups discovered along the way, now organized as the next tier.
   narrative-only "you roll to attack and win" outcomes. Affected files:
   `src/engine/ScenarioEngine.jsx`, `src/utils/dice.js`,
   `src/data/scenarios/intro.json`. (PR #8)
-- [ ] [BUG] If a party member's HP reaches 0 there's no "fallen" handling
+- [x] [BUG] If a party member's HP reaches 0 there's no "fallen" handling
   beyond the strikethrough name in `PartyTracker` — no game-over state or
   exclusion from further random-target effects. Affected files:
   `src/components/PartyTracker.jsx`, `src/engine/ScenarioEngine.jsx`,
-  `src/engine/applyEffect.js`.
+  `src/engine/applyEffect.js`, `src/data/scenarios/intro.json`. (PR #9)
 - [ ] [FEATURE] A second tutorial scenario (or deeper branches on the first)
   to reinforce combat/trap/flee/magic mechanics beyond one playthrough.
   Affected files: `src/data/scenarios/`.
