@@ -55,9 +55,12 @@ follow-ups discovered along the way, now organized as the next tier.
   exclusion from further random-target effects. Affected files:
   `src/components/PartyTracker.jsx`, `src/engine/ScenarioEngine.jsx`,
   `src/engine/applyEffect.js`, `src/data/scenarios/intro.json`. (PR #9)
-- [ ] [FEATURE] A second tutorial scenario (or deeper branches on the first)
+- [x] [FEATURE] A second tutorial scenario (or deeper branches on the first)
   to reinforce combat/trap/flee/magic mechanics beyond one playthrough.
-  Affected files: `src/data/scenarios/`.
+  Affected files: `src/data/scenarios/intro.json`. (PR #10 — added a
+  `corridor_fork` decision point with a trap-free `quiet_passage`
+  alternative, and turned fleeing into a real retry loop back to the fork
+  instead of a hard dead end.)
 - [ ] [DEBT] No automated tests exist yet — verification has been manual
   `npm run build` + Playwright browser runs per PR. Consider a lightweight
   component/unit test setup (e.g. Vitest) so regressions are caught in CI,

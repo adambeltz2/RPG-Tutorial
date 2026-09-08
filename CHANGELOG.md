@@ -4,6 +4,16 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #10 — Scenario Depth (Fork + Flee Retry Loop)
+- Added a `corridor_fork` decision node right after entering the dungeon,
+  with a trap-free `quiet_passage` alternative to the existing trap path —
+  a real branch point where different choices carry different risk.
+- Fleeing the goblin room (`goblin_flee`) no longer dead-ends the tutorial —
+  it now loops back to `corridor_fork` so the player can regroup and try a
+  different approach, reinforcing that fleeing is a real tactic, not a loss
+  state.
+- Third P4 item done; `backlog.md` and `CHANGELOG.md` updated.
+
 ### PR #9 — Fallen-Party (Game Over) Handling
 - `ScenarioEngine` now detects a full party wipe (every member at 0 HP) after
   any `effect` resolves and routes to a dedicated `party_wiped` end node
