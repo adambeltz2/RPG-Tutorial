@@ -19,8 +19,9 @@ Both application phases are functional end-to-end: the Character Creation
 Wizard (`PartyBuilder`, class selection, starting-gold roller,
 `EquipmentShop`) and the Scenario Engine (`ScenarioEngine`, `PartyTracker`,
 and an introductory tutorial scenario covering combat, traps, fleeing, and
-magic). See `backlog.md` for what's next (P3: theming, deployment,
-persistence) and `CHANGELOG.md` for a per-PR history.
+magic), now styled with the terminal/parchment visual theme. See `backlog.md`
+for what's next (deployment, persistence) and `CHANGELOG.md` for a per-PR
+history.
 
 ## Getting Started
 ```bash

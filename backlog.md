@@ -32,8 +32,9 @@ merged or in an open PR (noted inline).
   fleeing, magic). Affected files: `src/data/scenarios/intro.json`. (PR #4)
 
 ## P3 — Polish & Deployment
-- [ ] [FEATURE] Terminal/parchment visual theme via Tailwind config. Affected
-  files: `tailwind.config.js`, `src/index.css`.
+- [x] [FEATURE] Terminal/parchment visual theme via Tailwind config. Affected
+  files: `tailwind.config.js`, `src/App.jsx`, `src/components/*.jsx`,
+  `src/engine/ScenarioEngine.jsx`. (PR #5)
 - [ ] [FEATURE] GitHub Pages deployment workflow. Affected files:
   `.github/workflows/deploy.yml`, `vite.config.js` (base path).
 - [ ] [DEBT] Add persistence (e.g. `localStorage`) so an in-progress party/session

@@ -4,6 +4,12 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #5 — Terminal/Parchment Theme
+- Added a `parchment`/`ink` color palette to `tailwind.config.js` and set the
+  monospace font stack, replacing the placeholder dark `stone`/`amber` theme
+  across `App.jsx` and all components with the light terminal/parchment
+  aesthetic described in `CLAUDE.md`.
+
 ### PR #4 — Scenario Engine
 - Added `ScenarioEngine` (state machine over scenario-node JSON), `PartyTracker`
   (persistent HP/gold display during encounters), and `src/data/scenarios/intro.json`

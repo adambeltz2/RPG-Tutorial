@@ -68,19 +68,19 @@ function PartyBuilder({ party, onChangeParty }) {
               type="button"
               onClick={() => openSlot(slotIndex)}
               className={`border p-3 text-left ${
-                activeSlot === slotIndex ? 'border-amber-500' : 'border-stone-700 hover:bg-stone-800'
+                activeSlot === slotIndex ? 'border-amber-600' : 'border-ink-400 hover:bg-parchment-200'
               }`}
             >
               {member ? (
                 <>
                   <div className="font-bold">{member.name}</div>
-                  <div className="text-xs text-stone-400">{member.class}</div>
-                  <div className="text-xs text-stone-500">
+                  <div className="text-xs text-ink-500">{member.class}</div>
+                  <div className="text-xs text-ink-400">
                     HP {member.hp} · {member.gold} gold
                   </div>
                 </>
               ) : (
-                <div className="text-stone-500">Empty slot {slotIndex + 1}</div>
+                <div className="text-ink-400">Empty slot {slotIndex + 1}</div>
               )}
             </button>
           )
@@ -88,14 +88,14 @@ function PartyBuilder({ party, onChangeParty }) {
       </div>
 
       {activeSlot !== null && (
-        <div className="border border-stone-700 p-4 space-y-4">
+        <div className="border border-ink-400 p-4 space-y-4">
           <div>
-            <label className="block text-sm text-stone-400 mb-1">Name</label>
+            <label className="block text-sm text-ink-500 mb-1">Name</label>
             <input
               type="text"
               value={draft.name}
               onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
-              className="w-full bg-stone-950 border border-stone-600 px-3 py-2"
+              className="w-full bg-parchment-50 border border-ink-400 px-3 py-2"
               placeholder={`Hero ${activeSlot + 1}`}
             />
           </div>
@@ -113,11 +113,11 @@ function PartyBuilder({ party, onChangeParty }) {
               type="button"
               disabled={!canSave}
               onClick={saveMember}
-              className="px-4 py-2 border border-amber-500 text-amber-400 hover:bg-stone-800 disabled:opacity-30"
+              className="px-4 py-2 border border-amber-600 text-amber-700 hover:bg-parchment-200 disabled:opacity-30"
             >
               Save Hero
             </button>
-            <button type="button" onClick={closeEditor} className="px-4 py-2 border border-stone-600 hover:bg-stone-800">
+            <button type="button" onClick={closeEditor} className="px-4 py-2 border border-ink-400 hover:bg-parchment-200">
               Cancel
             </button>
           </div>

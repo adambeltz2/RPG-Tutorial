@@ -15,8 +15,8 @@ function App() {
   const readyCount = party.filter(Boolean).length
 
   return (
-    <div className="min-h-screen bg-stone-900 text-stone-100 font-mono">
-      <header className="border-b border-stone-700 p-4">
+    <div className="min-h-screen bg-parchment-100 text-ink-700 font-mono">
+      <header className="border-b border-ink-400 p-4">
         <h1 className="text-xl">Four Against Darkness — Web Tutorial</h1>
       </header>
 
@@ -27,7 +27,7 @@ function App() {
             <PartyBuilder party={party} onChangeParty={setParty} />
             <button
               type="button"
-              className="mt-6 px-4 py-2 border border-stone-500 hover:bg-stone-800 disabled:opacity-30"
+              className="mt-6 px-4 py-2 border border-ink-500 hover:bg-parchment-200 disabled:opacity-30"
               disabled={readyCount < 4}
               onClick={() => setPhase(PHASES.SCENARIO_RUNNER)}
             >
