@@ -35,8 +35,8 @@ merged or in an open PR (noted inline).
 - [x] [FEATURE] Terminal/parchment visual theme via Tailwind config. Affected
   files: `tailwind.config.js`, `src/App.jsx`, `src/components/*.jsx`,
   `src/engine/ScenarioEngine.jsx`. (PR #5)
-- [ ] [FEATURE] GitHub Pages deployment workflow. Affected files:
-  `.github/workflows/deploy.yml`, `vite.config.js` (base path).
+- [x] [FEATURE] GitHub Pages deployment workflow. Affected files:
+  `.github/workflows/deploy.yml`, `vite.config.js` (base path). (PR #6)
 - [ ] [DEBT] Add persistence (e.g. `localStorage`) so an in-progress party/session
   survives a page reload. Affected files: `src/App.jsx`.
 
@@ -62,3 +62,7 @@ they're discovered, instead of being implemented ad hoc.)_
   the strikethrough name in `PartyTracker` — no game-over or bench logic yet.
   Low priority since the intro scenario's only HP loss is a minor trap dart.
   Affected files: `src/components/PartyTracker.jsx`, `src/engine/ScenarioEngine.jsx`.
+- [DEBT] GitHub Pages hosting (Settings → Pages) needs its Source set to
+  "GitHub Actions" for `.github/workflows/deploy.yml` to actually publish —
+  this is a one-time repo setting, not something a PR can change. Flagged
+  in PR #6 for the repo owner to enable.

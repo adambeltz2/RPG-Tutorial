@@ -4,6 +4,15 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #6 — GitHub Pages Deployment
+- Added `.github/workflows/deploy.yml`: builds with `npm ci && npm run build`
+  and publishes `dist/` to GitHub Pages via `actions/deploy-pages` on every
+  push to `main` (plus manual `workflow_dispatch`).
+- Set `base: '/RPG-Tutorial/'` in `vite.config.js` so built asset URLs resolve
+  correctly when served from the project pages path.
+- Note: the repo's Settings → Pages → Source must be set to "GitHub Actions"
+  once for the workflow to actually publish (logged in `backlog.md`).
+
 ### PR #5 — Terminal/Parchment Theme
 - Added a `parchment`/`ink` color palette to `tailwind.config.js` and set the
   monospace font stack, replacing the placeholder dark `stone`/`amber` theme
