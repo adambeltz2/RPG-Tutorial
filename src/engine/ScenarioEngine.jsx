@@ -2,8 +2,8 @@ import { useState } from 'react'
 import PartyTracker from '../components/PartyTracker.jsx'
 import { applyEffect } from './applyEffect.js'
 
-function ScenarioEngine({ scenario, party, onUpdateParty, onRestart }) {
-  const [currentNodeId, setCurrentNodeId] = useState(scenario.startNode)
+function ScenarioEngine({ scenario, party, onUpdateParty, onRestart, initialNodeId, onNodeChange }) {
+  const [currentNodeId, setCurrentNodeId] = useState(initialNodeId ?? scenario.startNode)
   const node = scenario.nodes[currentNodeId]
 
   function choose(choice) {
@@ -11,6 +11,7 @@ function ScenarioEngine({ scenario, party, onUpdateParty, onRestart }) {
       onUpdateParty(applyEffect(choice.effect, party))
     }
     setCurrentNodeId(choice.nextNode)
+    onNodeChange?.(choice.nextNode)
   }
 
   return (

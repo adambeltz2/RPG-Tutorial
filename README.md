@@ -15,13 +15,14 @@ and deploys as a static site (e.g. GitHub Pages).
 - **Static JSON/Markdown** — scenario content, no backend database
 
 ## Status
-Both application phases are functional end-to-end: the Character Creation
-Wizard (`PartyBuilder`, class selection, starting-gold roller,
-`EquipmentShop`) and the Scenario Engine (`ScenarioEngine`, `PartyTracker`,
-and an introductory tutorial scenario covering combat, traps, fleeing, and
-magic), now styled with the terminal/parchment visual theme. See `backlog.md`
-for what's next (deployment, persistence) and `CHANGELOG.md` for a per-PR
-history.
+The full tutorial loop is complete end-to-end and deployable: the Character
+Creation Wizard (`PartyBuilder`, class selection, starting-gold roller,
+`EquipmentShop`), the Scenario Engine (`ScenarioEngine`, `PartyTracker`, and
+an introductory tutorial scenario covering combat, traps, fleeing, and
+magic), a terminal/parchment visual theme, a GitHub Pages deploy workflow,
+and `localStorage` session persistence across reloads. See `backlog.md` for
+what's next (P4: dice-roll combat resolution, fallen-party handling, more
+scenario content) and `CHANGELOG.md` for a per-PR history.
 
 ## Getting Started
 ```bash

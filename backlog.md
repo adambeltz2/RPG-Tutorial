@@ -31,37 +31,52 @@ merged or in an open PR (noted inline).
 - [x] [FEATURE] Author the introductory tutorial scenario JSON (combat, traps,
   fleeing, magic). Affected files: `src/data/scenarios/intro.json`. (PR #4)
 
-## P3 — Polish & Deployment
+## P3 — Polish & Deployment ✅
 - [x] [FEATURE] Terminal/parchment visual theme via Tailwind config. Affected
   files: `tailwind.config.js`, `src/App.jsx`, `src/components/*.jsx`,
   `src/engine/ScenarioEngine.jsx`. (PR #5)
 - [x] [FEATURE] GitHub Pages deployment workflow. Affected files:
   `.github/workflows/deploy.yml`, `vite.config.js` (base path). (PR #6)
-- [ ] [DEBT] Add persistence (e.g. `localStorage`) so an in-progress party/session
-  survives a page reload. Affected files: `src/App.jsx`.
+- [x] [DEBT] Add persistence (e.g. `localStorage`) so an in-progress party/session
+  survives a page reload. Affected files: `src/App.jsx`,
+  `src/utils/storage.js`, `src/engine/ScenarioEngine.jsx`. (PR #7)
+
+All four original priority tiers (P0–P3) are complete. The items below are
+follow-ups discovered along the way, now organized as the next tier.
+
+## P4 — Depth & Robustness
+- [ ] [FEATURE] Real dice-roll resolution for combat choices (e.g. a d6
+  roll-under/roll-over vs. a target number, shown to the player) instead of
+  narrative-only "you roll to attack and win" outcomes. Affected files:
+  `src/engine/ScenarioEngine.jsx`, `src/utils/dice.js`,
+  `src/data/scenarios/intro.json`.
+- [ ] [BUG] If a party member's HP reaches 0 there's no "fallen" handling
+  beyond the strikethrough name in `PartyTracker` — no game-over state or
+  exclusion from further random-target effects. Affected files:
+  `src/components/PartyTracker.jsx`, `src/engine/ScenarioEngine.jsx`,
+  `src/engine/applyEffect.js`.
+- [ ] [FEATURE] A second tutorial scenario (or deeper branches on the first)
+  to reinforce combat/trap/flee/magic mechanics beyond one playthrough.
+  Affected files: `src/data/scenarios/`.
+- [ ] [DEBT] No automated tests exist yet — verification has been manual
+  `npm run build` + Playwright browser runs per PR. Consider a lightweight
+  component/unit test setup (e.g. Vitest) so regressions are caught in CI,
+  not just by hand.
+- [ ] [DEBT] `npm audit` flags a moderate esbuild dev-server advisory via the
+  Vite 5 toolchain; the only fix is a breaking Vite 8 upgrade
+  (`npm audit fix --force`). Dev-server-only exposure, low risk for this
+  personal-use project — revisit as its own dedicated PR given the breaking
+  change. Affected files: `package.json`.
 
 ## Unscheduled / Ideas
 _(New feature ideas, edge cases, and non-critical bugs get logged here as
 they're discovered, instead of being implemented ad hoc.)_
-- [DEBT] `npm audit` flags a moderate esbuild dev-server advisory via the
-  Vite 5 toolchain; the only fix is a breaking Vite 8 upgrade
-  (`npm audit fix --force`). Dev-server-only exposure, low risk for this
-  personal-use project — revisit when doing a Vite major-version bump.
-  Affected files: `package.json`.
 - [FEATURE] Scenario nodes support an optional `choice.effect`
   (`hpDelta`/`goldDelta`, `target: "random"`) resolved by
   `src/engine/applyEffect.js` — extends the CLAUDE.md scenario-node schema so
   choices can actually move the needle on HP/gold, not just branch narrative.
   Introduced in PR #4; consider promoting this to a documented part of the
   scenario data structure in CLAUDE.md if more scenarios adopt it.
-- [FEATURE] Combat/trap/attack resolution is currently narrative-only (no real
-  dice roll against a target number). A future scenario could add an actual
-  d6 roll-under/roll-over check before applying `effect`, closer to the
-  tabletop rules. Affected files: `src/engine/ScenarioEngine.jsx`.
-- [BUG] If a party member's HP reaches 0 there's no "fallen" handling beyond
-  the strikethrough name in `PartyTracker` — no game-over or bench logic yet.
-  Low priority since the intro scenario's only HP loss is a minor trap dart.
-  Affected files: `src/components/PartyTracker.jsx`, `src/engine/ScenarioEngine.jsx`.
 - [DEBT] GitHub Pages hosting (Settings → Pages) needs its Source set to
   "GitHub Actions" for `.github/workflows/deploy.yml` to actually publish —
   this is a one-time repo setting, not something a PR can change. Flagged
