@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import PartyBuilder from './components/PartyBuilder.jsx'
+import ScenarioEngine from './engine/ScenarioEngine.jsx'
+import introScenario from './data/scenarios/intro.json'
 
 const PHASES = {
   CHARACTER_CREATION: 'character_creation',
@@ -36,8 +38,16 @@ function App() {
 
         {phase === PHASES.SCENARIO_RUNNER && (
           <section>
-            <h2 className="text-lg mb-2">Scenario Engine</h2>
-            <p className="text-stone-400">Scenario engine coming soon.</p>
+            <h2 className="text-lg mb-4">Scenario Engine</h2>
+            <ScenarioEngine
+              scenario={introScenario}
+              party={party}
+              onUpdateParty={setParty}
+              onRestart={() => {
+                setParty([])
+                setPhase(PHASES.CHARACTER_CREATION)
+              }}
+            />
           </section>
         )}
       </main>
