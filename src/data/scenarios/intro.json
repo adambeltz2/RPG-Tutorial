@@ -5,7 +5,22 @@
       "id": "entrance",
       "text": "Your party of four stands before the crumbling entrance to an old dungeon. Torchlight flickers somewhere deep inside.",
       "choices": [
-        { "label": "Enter the dungeon", "nextNode": "corridor_trap" }
+        { "label": "Enter the dungeon", "nextNode": "corridor_fork" }
+      ]
+    },
+    "corridor_fork": {
+      "id": "corridor_fork",
+      "text": "Just inside, the corridor splits: one way flickers with torchlight, the other is shrouded in quiet darkness. Exploration is part of the adventure — different paths lead to different risks.",
+      "choices": [
+        { "label": "Head toward the torchlight", "nextNode": "corridor_trap" },
+        { "label": "Slip through the quiet darkness", "nextNode": "quiet_passage" }
+      ]
+    },
+    "quiet_passage": {
+      "id": "quiet_passage",
+      "text": "You creep through the dark passage undetected. No traps here — but you can't be sure what's waiting ahead either.",
+      "choices": [
+        { "label": "Continue deeper", "nextNode": "goblin_room" }
       ]
     },
     "corridor_trap": {
@@ -71,9 +86,10 @@
     },
     "goblin_flee": {
       "id": "goblin_flee",
-      "text": "You beat a hasty retreat back to the entrance, goblins hooting behind you. Fleeing is always an option when the odds look bad — living to try again is a win.",
-      "choices": [],
-      "isEnd": true
+      "text": "You beat a hasty retreat back down the corridor, goblins hooting behind you. Fleeing is always an option when the odds look bad — regrouping and trying another approach beats a bad fight.",
+      "choices": [
+        { "label": "Regroup and try another path", "nextNode": "corridor_fork" }
+      ]
     },
     "treasure_room": {
       "id": "treasure_room",

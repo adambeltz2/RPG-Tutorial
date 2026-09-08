@@ -4,6 +4,42 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #12 — Vite 8 Upgrade
+- Upgraded `vite` (^5.4.11 → ^8.2.2), `@vitejs/plugin-react` (^4.3.4 →
+  ^5.2.0), and `vitest` (^3.2.6 → ^5.0.0), resolving the moderate esbuild
+  dev-server advisory that was the last remaining `npm audit` finding.
+  `npm audit` now reports 0 vulnerabilities.
+- Deliberately left Tailwind CSS on 3.x — Tailwind 4 is a separate breaking
+  config rewrite, logged as its own follow-up in `backlog.md`.
+- Last item in the P4 tier done — all of P0–P4 are now complete.
+
+### PR #11 — Automated Tests (Vitest)
+- Added `vitest` (pinned to `^3.2.6` — the first release patching a
+  critical Vitest UI-server RCE advisory that affects `^2.x`/earlier `^3.x`,
+  while still supporting our Vite 5 toolchain) as a dev dependency and a
+  `npm test` script.
+- Added unit tests for the pure logic modules: `src/utils/dice.test.js`
+  (bounds/shape of `rollDie`/`rollDice`/`rollStartingGold`) and
+  `src/engine/applyEffect.test.js` (immutability, random-target excludes
+  fallen members, HP/gold never go negative, gold deduction order).
+- Added `.github/workflows/ci.yml` (runs `npm test` + `npm run build` on
+  every pull request) and wired `npm test` into `deploy.yml` before the
+  build step, so a regression fails CI instead of only being caught by
+  manual review.
+- Fourth P4 item done; `backlog.md` and `CHANGELOG.md` updated. Manual
+  Playwright browser runs remain the process for UI/flow verification per
+  PR — this adds automated coverage for the pure-logic layer only.
+
+### PR #10 — Scenario Depth (Fork + Flee Retry Loop)
+- Added a `corridor_fork` decision node right after entering the dungeon,
+  with a trap-free `quiet_passage` alternative to the existing trap path —
+  a real branch point where different choices carry different risk.
+- Fleeing the goblin room (`goblin_flee`) no longer dead-ends the tutorial —
+  it now loops back to `corridor_fork` so the player can regroup and try a
+  different approach, reinforcing that fleeing is a real tactic, not a loss
+  state.
+- Third P4 item done; `backlog.md` and `CHANGELOG.md` updated.
+
 ### PR #9 — Fallen-Party (Game Over) Handling
 - `ScenarioEngine` now detects a full party wipe (every member at 0 HP) after
   any `effect` resolves and routes to a dedicated `party_wiped` end node
