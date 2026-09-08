@@ -61,10 +61,16 @@ follow-ups discovered along the way, now organized as the next tier.
   `corridor_fork` decision point with a trap-free `quiet_passage`
   alternative, and turned fleeing into a real retry loop back to the fork
   instead of a hard dead end.)
-- [ ] [DEBT] No automated tests exist yet — verification has been manual
+- [x] [DEBT] No automated tests exist yet — verification has been manual
   `npm run build` + Playwright browser runs per PR. Consider a lightweight
   component/unit test setup (e.g. Vitest) so regressions are caught in CI,
-  not just by hand.
+  not just by hand. Affected files: `package.json`,
+  `src/utils/dice.test.js`, `src/engine/applyEffect.test.js`,
+  `.github/workflows/ci.yml`, `.github/workflows/deploy.yml`. (PR #11 —
+  added Vitest unit tests for the pure logic modules (dice, applyEffect),
+  wired `npm test` into both a new PR-gating CI workflow and the deploy
+  workflow. Manual Playwright browser runs remain the process for UI/flow
+  verification per PR — this covers the pure-logic layer only.)
 - [ ] [DEBT] `npm audit` flags a moderate esbuild dev-server advisory via the
   Vite 5 toolchain; the only fix is a breaking Vite 8 upgrade
   (`npm audit fix --force`). Dev-server-only exposure, low risk for this

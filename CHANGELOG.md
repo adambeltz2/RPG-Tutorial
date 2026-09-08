@@ -4,6 +4,23 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #11 — Automated Tests (Vitest)
+- Added `vitest` (pinned to `^3.2.6` — the first release patching a
+  critical Vitest UI-server RCE advisory that affects `^2.x`/earlier `^3.x`,
+  while still supporting our Vite 5 toolchain) as a dev dependency and a
+  `npm test` script.
+- Added unit tests for the pure logic modules: `src/utils/dice.test.js`
+  (bounds/shape of `rollDie`/`rollDice`/`rollStartingGold`) and
+  `src/engine/applyEffect.test.js` (immutability, random-target excludes
+  fallen members, HP/gold never go negative, gold deduction order).
+- Added `.github/workflows/ci.yml` (runs `npm test` + `npm run build` on
+  every pull request) and wired `npm test` into `deploy.yml` before the
+  build step, so a regression fails CI instead of only being caught by
+  manual review.
+- Fourth P4 item done; `backlog.md` and `CHANGELOG.md` updated. Manual
+  Playwright browser runs remain the process for UI/flow verification per
+  PR — this adds automated coverage for the pure-logic layer only.
+
 ### PR #10 — Scenario Depth (Fork + Flee Retry Loop)
 - Added a `corridor_fork` decision node right after entering the dungeon,
   with a trap-free `quiet_passage` alternative to the existing trap path —
