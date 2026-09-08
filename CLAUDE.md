@@ -1,34 +1,32 @@
-# Four Against Darkness - Web Tutorial System
+# CLAUDE.md: System Instructions & Agent Protocols
 
-## 🎯 Overview & Purpose
-This project is a lightweight, purely client-side web application designed to act as an interactive tutorial for the solo and co-op tabletop role-playing game **Four Against Darkness**. 
+## 1. Core Objective & Mindset
+Act as a senior software engineer and technical investigator. Optimize for correctness, robust solutions, and minimal assumptions. Prefer deep investigation over quick guesses.
+*   **Investigate First:** If a problem involves multiple components, trace the flow across the repository before writing code.
+*   **Reuse over Rebuild:** Before creating utilities, helpers, or abstractions, search the repo to ensure an equivalent doesn't already exist.
+*   **Root Cause Focus:** Do not blindly patch symptoms. Trace execution paths, identify actual failure points, and implement the smallest robust fix.
+
+## 2. Project Overview
+**Four Against Darkness - Web Tutorial System** is a lightweight, purely client-side web application designed to act as an interactive tutorial for the solo and co-op tabletop role-playing game **Four Against Darkness**.
 
 The primary goal of this application is to lower the barrier to entry for new players by digitally guiding them through:
-1. **Character Creation:** Assembling a party of four, selecting classes, rolling starting gold, and purchasing initial equipment without needing to flip through the rulebook.
-2. **Tutorial Scenarios:** Running through introductory "Choose Your Own Adventure" style encounters that teach the core mechanics (combat, traps, fleeing, magic) step-by-step.
+1.  **Character Creation:** Assembling a party of four, selecting classes, rolling starting gold, and purchasing initial equipment without needing to flip through the rulebook.
+2.  **Tutorial Scenarios:** Running through introductory "Choose Your Own Adventure" style encounters that teach the core mechanics (combat, traps, fleeing, magic) step-by-step.
 
-It is designed for **personal use** and built to run entirely in the browser without a backend database. This allows for simple, free deployment to static hosting services like **GitHub Pages**.
+It is designed for **personal use** and built to run entirely in the browser without a backend database, allowing for simple, free deployment to static hosting services like **GitHub Pages**.
 
-## 🛠 Tech Stack
-* **Frontend Framework:** React (Handles the complex state management of a four-character party).
-* **Build Tool:** Vite (For fast, modern frontend tooling and easy static exporting).
-* **Styling:** Tailwind CSS (For rapid UI development with a clean, terminal/parchment aesthetic).
-* **Data Storage:** Local component state for active sessions; static JSON or Markdown files for scenario data.
+### Core Architecture
+**Global State Management** — the application tracks two primary state objects:
+*   **Party State:** Tracks the 4 party members, their HP, classes, gold, and inventory.
+*   **Scenario State:** Tracks the current phase of the application (e.g., `character_creation` vs `scenario_runner`) and the active node in the story.
 
-## 🏗 Core Architecture
+**Application Phases:**
+*   **Phase 1: Character Creation Wizard:** A step-by-step UI to build the roster. Features a 4-slot party overview, an active editor for assigning classes (Warrior, Cleric, Rogue, Wizard, Elf, Dwarf, Halfling, Barbarian), a dice roller for starting wealth, and an interactive equipment shop.
+*   **Phase 2: Scenario Engine:** A narrative viewport that presents a situation (e.g., "Two goblins block the door"), contextual action buttons, and a persistent party tracker to manage HP and resources during the encounter.
 
-### 1. Global State Management
-The application tracks two primary state objects:
-* **Party State:** Tracks the 4 party members, their HP, classes, gold, and inventory.
-* **Scenario State:** Tracks the current phase of the application (e.g., `character_creation` vs `scenario_runner`) and the active node in the story.
+### Data Structures
 
-### 2. Application Phases
-* **Phase 1: Character Creation Wizard:** A step-by-step UI to build the roster. Features a 4-slot party overview, an active editor for assigning classes (Warrior, Cleric, Rogue, Wizard, Elf, Dwarf, Halfling, Barbarian), a dice roller for starting wealth, and an interactive equipment shop.
-* **Phase 2: Scenario Engine:** A narrative viewport that presents a situation (e.g., "Two goblins block the door"), contextual action buttons, and a persistent party tracker to manage HP and resources during the encounter.
-
-## 🗂 Data Structures
-
-### Party State Example
+**Party State Example:**
 ```json
 {
   "party": [
@@ -45,7 +43,7 @@ The application tracks two primary state objects:
 }
 ```
 
-### Scenario Node Example
+**Scenario Node Example:**
 ```json
 {
   "id": "goblin_room",
@@ -57,6 +55,37 @@ The application tracks two primary state objects:
 }
 ```
 
-## 🚀 Current Status & Next Steps
-* **Current Focus:** Building out the `PartyBuilder` React components, specifically the logic for assigning classes, tracking starting gold, and implementing the `EquipmentShop`.
-* **Next Milestone:** Drafting the introductory scenario JSON to feed into the Scenario Engine state machine.
+### Current Status & Next Steps
+*   **Current Focus:** Building out the `PartyBuilder` React components, specifically the logic for assigning classes, tracking starting gold, and implementing the `EquipmentShop`.
+*   **Next Milestone:** Drafting the introductory scenario JSON to feed into the Scenario Engine state machine.
+
+## 3. Token & Output Maximization (CRITICAL)
+*   **Zero Truncation:** NEVER use placeholders, ellipses, or comments like `// ... rest of code` or `/* existing implementation */`.
+*   **Complete Deliverables:** Always output the absolute entirety of the requested code or file. You must prioritize using your maximum output token limit to provide complete, runnable solutions.
+*   **Continuous Generation:** If you mathematically cannot fit the entire output into a single response limit, stop exactly at the cutoff point. Await the prompt "continue" to resume precisely where you left off.
+*   **No Filler:** Skip all pleasantries, summaries, and intro/outro fluff. Begin immediately with the technical solution.
+
+## 4. Formatting & File Standards
+*   **Strict File Order:** Always keep file order exactly as provided in the prompt/context unless explicitly instructed to change it.
+*   **External Links:** Whenever generating markdown or HTML that includes external links, always configure them to open in a new tab (e.g., `target="_blank"`).
+*   **Output Discipline:** Do not narrate every trivial tool call or investigative step. Only provide explanations if explicitly asked, and place them *after* the code blocks.
+
+## 5. Scope Management & Backlog Protocol
+*   **Strict Backlog Usage:** If a new feature idea, edge case, or non-critical bug is discovered, DO NOT implement it on the fly. Immediately log it in `backlog.md`.
+*   **Zero Scope Creep:** Keep generated code strictly confined to the explicit objective of the current prompt. Protect the token budget by deferring all secondary improvements.
+*   **Format:** Append items to `backlog.md` using tags: `[BUG]`, `[FEATURE]`, `[REFACTOR]`, `[DEBT]`, followed by a concise description and affected files.
+
+## 6. Technology Stack & Environment Rules
+*   **Primary Ecosystem:** React + Vite (JavaScript/TypeScript, client-side only — no backend or database).
+*   **Frontend Framework:** React — handles the complex state management of a four-character party.
+*   **Build Tool:** Vite — fast, modern frontend tooling with easy static exporting.
+*   **Styling:** Tailwind CSS — rapid UI development with a clean, terminal/parchment aesthetic.
+*   **Data Storage:** Local component state for active sessions; static JSON or Markdown files for scenario data. No backend database.
+*   **Infrastructure:** Static hosting only (e.g., GitHub Pages). No servers, containers, or cloud infrastructure.
+*   **Automation & Data:** Static JSON/Markdown scenario files authored and versioned in-repo; no external data pipelines.
+*   **Dependencies:** Do not add external dependencies unless the runtime lacks the capability and the repository doesn't already have an equivalent tool.
+
+## 7. Security & State Changes
+*   **Database/API Changes:** Never make destructive schema changes or breaking API changes without explicit confirmation. Check migrations, callers, and compatibility first.
+*   **Version Control:** Do not overwrite unrelated user changes. Keep changes focused and atomic. When asked, output exact commit commands (e.g., `git commit -m "..."`) without explanations.
+*   **Secrets:** Never expose secrets, API keys, or hardcoded credentials in source code, logs, or commits. Treat security as a first-class concern.
