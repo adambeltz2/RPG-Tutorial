@@ -7,10 +7,10 @@ Act as a senior software engineer and technical investigator. Optimize for corre
 *   **Root Cause Focus:** Do not blindly patch symptoms. Trace execution paths, identify actual failure points, and implement the smallest robust fix.
 
 ## 2. Project Overview
-**Four Against Darkness - Web Tutorial System** is a lightweight, purely client-side web application designed to act as an interactive tutorial for the solo and co-op tabletop role-playing game **Four Against Darkness**.
+**Four Against Darkness - Web Tutorial System** is a lightweight, purely client-side web application designed to act as an interactive companion to the solo and co-op tabletop role-playing game **Four Against Darkness** — it accompanies the rulebook and the game, and does not replace either or claim credit for them.
 
-The primary goal of this application is to lower the barrier to entry for new players by digitally guiding them through:
-1.  **Character Creation:** Assembling a party of four, selecting classes, rolling starting gold, and purchasing initial equipment without needing to flip through the rulebook.
+The primary goal of this application is to lower the barrier to entry for new players by digitally guiding them through, alongside the rulebook:
+1.  **Character Creation:** Assembling a party of four, selecting classes, rolling starting gold, and purchasing initial equipment.
 2.  **Tutorial Scenarios:** Running through introductory "Choose Your Own Adventure" style encounters that teach the core mechanics (combat, traps, fleeing, magic) step-by-step.
 
 It is designed for **personal use** and built to run entirely in the browser without a backend database, allowing for simple, free deployment to static hosting services like **GitHub Pages**.
