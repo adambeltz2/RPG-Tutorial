@@ -43,6 +43,8 @@ It is designed for **personal use** and built to run entirely in the browser wit
 }
 ```
 
+**Scenario File Shape:** each file under `src/data/scenarios/` is `{ startNode, nodes }`, where `nodes` is a map of node id → node. `ScenarioEngine` walks this graph starting at `startNode`.
+
 **Scenario Node Example:**
 ```json
 {
@@ -54,10 +56,32 @@ It is designed for **personal use** and built to run entirely in the browser wit
   ]
 }
 ```
+A node with `"isEnd": true` and `"choices": []` ends the run (`ScenarioEngine` shows a "Restart Tutorial" button instead of choices).
+
+**Choice Schema Extensions:** a `choice` normally just picks a fixed `nextNode`, but can opt into either of the following (resolved in `ScenarioEngine.choose()`, applied via `src/engine/applyEffect.js`):
+*   **`effect`** — mutates party state as a side effect of taking this choice, instead of (or in addition to) just branching narrative:
+    ```json
+    { "label": "Bribe them (Costs 10 Gold)", "nextNode": "goblin_bribe_success", "effect": { "goldDelta": -10 } }
+    ```
+    `hpDelta`/`goldDelta` are applied party-wide unless `"target": "random"` picks one random *living* (`hp > 0`) member. Gold is deducted from the party's pooled gold in member order; HP never drops below 0. If an effect brings every member to 0 HP, `ScenarioEngine` overrides the destination to route to a `party_wiped` node instead, if the scenario defines one — this is a scenario-wide game-over safety net, not something each node has to handle itself.
+*   **`roll`** — branches on a real dice roll instead of a fixed `nextNode`:
+    ```json
+    {
+      "label": "Fight them (Roll Attack)",
+      "roll": {
+        "sides": 6,
+        "target": 4,
+        "successNode": "goblin_fight_resolution",
+        "failNode": "goblin_fight_setback",
+        "failEffect": { "hpDelta": -1, "target": "random" }
+      }
+    }
+    ```
+    Rolls `sides`-sided die via `src/utils/dice.js`; success is `roll >= target`. `successEffect`/`failEffect` (optional, same shape as `effect` above) apply only on their respective outcome. `ScenarioEngine` shows a "🎲 Rolled N on dS (needed T+)" banner above the node text after a roll.
 
 ### Current Status & Next Steps
-*   **Current Focus:** Building out the `PartyBuilder` React components, specifically the logic for assigning classes, tracking starting gold, and implementing the `EquipmentShop`.
-*   **Next Milestone:** Drafting the introductory scenario JSON to feed into the Scenario Engine state machine.
+*   **Current Focus:** The full tutorial loop (Character Creation → Scenario Engine) is built, tested (Vitest unit tests + manual Playwright browser runs per PR), and deployable via GitHub Pages. See `backlog.md` for the live prioritized list and `CHANGELOG.md` for a per-PR history — both are the source of truth for what's done vs. planned, not this section.
+*   **Next Milestone:** See `backlog.md`'s "Unscheduled / Ideas" section for currently-tracked follow-up work.
 
 ## 3. Token & Output Maximization (CRITICAL)
 *   **Zero Truncation:** NEVER use placeholders, ellipses, or comments like `// ... rest of code` or `/* existing implementation */`.

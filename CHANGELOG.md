@@ -4,6 +4,39 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #14 — Tailwind 4 Migration + CLAUDE.md Schema Docs
+- Migrated Tailwind CSS 3 → 4 via the `@tailwindcss/vite` plugin: removed
+  `tailwind.config.js`, `postcss.config.js`, and the `postcss`/
+  `autoprefixer` dependencies entirely; the custom `parchment`/`ink`
+  palette and monospace font now live in a `@theme` block in
+  `src/index.css` (`@import "tailwindcss"` + `--color-*`/`--font-mono`
+  custom properties), which Tailwind 4 turns into the same utility
+  classes already used throughout the app (`bg-parchment-100`,
+  `text-ink-500`, `font-mono`, etc.) — no component changes needed.
+  Verified pixel-identical rendering (including hover states) via
+  Playwright before/after. `npm audit`: still 0 vulnerabilities.
+- Documented the `choice.effect` and `choice.roll` scenario-node schema
+  extensions in `CLAUDE.md` itself (previously only in `backlog.md`/
+  `CHANGELOG.md`), and refreshed the "Current Status & Next Steps"
+  section, which had been stale since the very first milestone.
+- Closes out the last two "Unscheduled / Ideas" items from the P0–P4
+  backlog; added a `[PROCESS]` note about the stacked-PR merge gap found
+  and fixed in PR #13.
+
+### PR #13 — Integrate P4 Work Into Main
+- PRs #7–#12 had each merged successfully, but only into their own base
+  branch in the stack rather than into `main` — so none of that work had
+  actually reached `main`. Traced this via the GitHub API (`merged: true`
+  on all six, but `main` unchanged since PR #6) and `git log main..branch`
+  on each intermediate branch.
+- Found that `claude/fallen-party-handling`, `claude/scenario-depth`,
+  `claude/vitest-setup`, and `claude/vite-8-upgrade` had already converged
+  to be byte-identical, containing the full cumulative P4 work. Branched
+  from the tip (`claude/vite-8-upgrade`), merged current `main` in (clean,
+  no conflicts), re-ran the full test/build/Playwright regression suite,
+  and opened a single PR straight to `main`.
+- This is the PR that actually brought PRs #7–#12's work into `main`.
+
 ### PR #12 — Vite 8 Upgrade
 - Upgraded `vite` (^5.4.11 → ^8.2.2), `@vitejs/plugin-react` (^4.3.4 →
   ^5.2.0), and `vitest` (^3.2.6 → ^5.0.0), resolving the moderate esbuild

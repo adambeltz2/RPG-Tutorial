@@ -10,8 +10,8 @@ and deploys as a static site (e.g. GitHub Pages).
 
 ## Tech Stack
 - **React** — UI and party/scenario state management
-- **Vite** — dev server and static build/export
-- **Tailwind CSS** — terminal/parchment styling
+- **Vite 8** — dev server and static build/export
+- **Tailwind CSS 4** — terminal/parchment styling, via `@tailwindcss/vite`
 - **Static JSON/Markdown** — scenario content, no backend database
 
 ## Status
@@ -23,10 +23,10 @@ magic, now with a fork, a flee-and-retry loop, and a fallen-party game-over
 state), a terminal/parchment visual theme, a GitHub Pages deploy workflow,
 `localStorage` session persistence across reloads, and real d6 dice-roll
 resolution for the combat choice. Unit tests (Vitest) cover the pure logic
-modules and gate CI on every PR. The toolchain is current (Vite 8, `npm
-audit` clean) and every item in the original P0–P4 backlog is done — see
-`backlog.md`'s "Unscheduled / Ideas" for what's next, and `CHANGELOG.md`
-for a per-PR history.
+modules and gate CI on every PR. The toolchain is fully current (Vite 8,
+Tailwind 4, `npm audit` clean) and every item in the original P0–P4
+backlog is done — see `backlog.md`'s "Unscheduled / Ideas" for what's
+next, and `CHANGELOG.md` for a per-PR history.
 
 ## Getting Started
 ```bash
@@ -51,3 +51,10 @@ Development follows `CLAUDE.md`:
 - New feature ideas, edge cases, or non-critical bugs found along the way are
   logged in `backlog.md` rather than built ad hoc.
 - Each merged PR gets an entry in `CHANGELOG.md`.
+- **Stacking PRs:** if a PR's base is another not-yet-merged PR's branch
+  rather than `main`, merging it only updates that base branch — it does
+  *not* reach `main` until the whole chain does. Either merge the stack
+  strictly bottom-up (repointing each PR's base to `main` as the one below
+  it lands), or land the final PR straight into `main` once every PR in
+  the chain shows merged, and confirm with `git log main..<branch>` that
+  the branch is actually ahead of `main` before assuming the work landed.
