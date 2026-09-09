@@ -1,21 +1,49 @@
 import { useState } from 'react'
 import PartyTracker from '../components/PartyTracker.jsx'
 import { applyEffect } from './applyEffect.js'
+import { rollDie } from '../utils/dice.js'
 
-function ScenarioEngine({ scenario, party, onUpdateParty, onRestart }) {
-  const [currentNodeId, setCurrentNodeId] = useState(scenario.startNode)
+function ScenarioEngine({ scenario, party, onUpdateParty, onRestart, initialNodeId, onNodeChange }) {
+  const [currentNodeId, setCurrentNodeId] = useState(initialNodeId ?? scenario.startNode)
+  const [lastRoll, setLastRoll] = useState(null)
   const node = scenario.nodes[currentNodeId]
 
+  function goTo(nodeId) {
+    setCurrentNodeId(nodeId)
+    onNodeChange?.(nodeId)
+  }
+
+  function applyAndNavigate(effect, nextNodeId) {
+    const nextParty = effect ? applyEffect(effect, party) : party
+    if (effect) onUpdateParty(nextParty)
+
+    const wiped = nextParty.length > 0 && nextParty.every((m) => m.hp <= 0)
+    goTo(wiped && scenario.nodes.party_wiped ? 'party_wiped' : nextNodeId)
+  }
+
   function choose(choice) {
-    if (choice.effect) {
-      onUpdateParty(applyEffect(choice.effect, party))
+    if (choice.roll) {
+      const { sides, target, successNode, failNode, successEffect, failEffect } = choice.roll
+      const result = rollDie(sides)
+      const success = result >= target
+      setLastRoll({ result, sides, target, success })
+      applyAndNavigate(success ? successEffect : failEffect, success ? successNode : failNode)
+      return
     }
-    setCurrentNodeId(choice.nextNode)
+
+    setLastRoll(null)
+    applyAndNavigate(choice.effect, choice.nextNode)
   }
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
       <div className="border border-ink-400 p-4 space-y-4">
+        {lastRoll && (
+          <p className={`text-sm ${lastRoll.success ? 'text-green-700' : 'text-red-700'}`}>
+            🎲 Rolled {lastRoll.result} on d{lastRoll.sides} (needed {lastRoll.target}+) —{' '}
+            {lastRoll.success ? 'Success!' : 'Failure.'}
+          </p>
+        )}
         <p className="leading-relaxed">{node.text}</p>
 
         {node.isEnd ? (

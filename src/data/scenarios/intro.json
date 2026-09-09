@@ -5,7 +5,22 @@
       "id": "entrance",
       "text": "Your party of four stands before the crumbling entrance to an old dungeon. Torchlight flickers somewhere deep inside.",
       "choices": [
-        { "label": "Enter the dungeon", "nextNode": "corridor_trap" }
+        { "label": "Enter the dungeon", "nextNode": "corridor_fork" }
+      ]
+    },
+    "corridor_fork": {
+      "id": "corridor_fork",
+      "text": "Just inside, the corridor splits: one way flickers with torchlight, the other is shrouded in quiet darkness. Exploration is part of the adventure — different paths lead to different risks.",
+      "choices": [
+        { "label": "Head toward the torchlight", "nextNode": "corridor_trap" },
+        { "label": "Slip through the quiet darkness", "nextNode": "quiet_passage" }
+      ]
+    },
+    "quiet_passage": {
+      "id": "quiet_passage",
+      "text": "You creep through the dark passage undetected. No traps here — but you can't be sure what's waiting ahead either.",
+      "choices": [
+        { "label": "Continue deeper", "nextNode": "goblin_room" }
       ]
     },
     "corridor_trap": {
@@ -34,7 +49,16 @@
       "id": "goblin_room",
       "text": "Two goblins turn and snarl at you. They are Level 3 minions. Combat, bribery, and fleeing are all valid tactics — Four Against Darkness rewards good judgement over brute force.",
       "choices": [
-        { "label": "Fight them (Roll Attack)", "nextNode": "goblin_fight_resolution" },
+        {
+          "label": "Fight them (Roll Attack)",
+          "roll": {
+            "sides": 6,
+            "target": 4,
+            "successNode": "goblin_fight_resolution",
+            "failNode": "goblin_fight_setback",
+            "failEffect": { "hpDelta": -1, "target": "random" }
+          }
+        },
         { "label": "Bribe them (Costs 10 Gold)", "nextNode": "goblin_bribe_success", "effect": { "goldDelta": -10 } },
         { "label": "Flee back down the corridor", "nextNode": "goblin_flee" }
       ]
@@ -42,6 +66,13 @@
     "goblin_fight_resolution": {
       "id": "goblin_fight_resolution",
       "text": "You roll to attack and the goblins fall before your blades! The path ahead is clear.",
+      "choices": [
+        { "label": "Continue to the treasure room", "nextNode": "treasure_room" }
+      ]
+    },
+    "goblin_fight_setback": {
+      "id": "goblin_fight_setback",
+      "text": "Your attack goes wide and a goblin's blade catches one of your heroes before you finish them off. Combat always carries risk — that's why bribery and fleeing are on the table too.",
       "choices": [
         { "label": "Continue to the treasure room", "nextNode": "treasure_room" }
       ]
@@ -55,9 +86,10 @@
     },
     "goblin_flee": {
       "id": "goblin_flee",
-      "text": "You beat a hasty retreat back to the entrance, goblins hooting behind you. Fleeing is always an option when the odds look bad — living to try again is a win.",
-      "choices": [],
-      "isEnd": true
+      "text": "You beat a hasty retreat back down the corridor, goblins hooting behind you. Fleeing is always an option when the odds look bad — regrouping and trying another approach beats a bad fight.",
+      "choices": [
+        { "label": "Regroup and try another path", "nextNode": "corridor_fork" }
+      ]
     },
     "treasure_room": {
       "id": "treasure_room",
@@ -77,6 +109,12 @@
     "treasure_found": {
       "id": "treasure_found",
       "text": "Inside the chest: a stash of gold and a masterwork dagger. Tutorial complete — you've learned the basics: combat, traps, fleeing, and magic.",
+      "choices": [],
+      "isEnd": true
+    },
+    "party_wiped": {
+      "id": "party_wiped",
+      "text": "Your entire party has fallen. Four Against Darkness is unforgiving that way — but every defeat is a lesson for the next attempt.",
       "choices": [],
       "isEnd": true
     }

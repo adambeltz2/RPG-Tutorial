@@ -1,18 +1,33 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import PartyBuilder from './components/PartyBuilder.jsx'
 import ScenarioEngine from './engine/ScenarioEngine.jsx'
 import introScenario from './data/scenarios/intro.json'
+import { loadSession, saveSession, clearSession } from './utils/storage.js'
 
 const PHASES = {
   CHARACTER_CREATION: 'character_creation',
   SCENARIO_RUNNER: 'scenario_runner',
 }
 
+const savedSession = loadSession()
+
 function App() {
-  const [phase, setPhase] = useState(PHASES.CHARACTER_CREATION)
-  const [party, setParty] = useState([])
+  const [phase, setPhase] = useState(savedSession?.phase ?? PHASES.CHARACTER_CREATION)
+  const [party, setParty] = useState(savedSession?.party ?? [])
+  const [scenarioNodeId, setScenarioNodeId] = useState(savedSession?.scenarioNodeId ?? introScenario.startNode)
+
+  useEffect(() => {
+    saveSession({ phase, party, scenarioNodeId })
+  }, [phase, party, scenarioNodeId])
 
   const readyCount = party.filter(Boolean).length
+
+  function restart() {
+    setParty([])
+    setScenarioNodeId(introScenario.startNode)
+    setPhase(PHASES.CHARACTER_CREATION)
+    clearSession()
+  }
 
   return (
     <div className="min-h-screen bg-parchment-100 text-ink-700 font-mono">
@@ -43,10 +58,9 @@ function App() {
               scenario={introScenario}
               party={party}
               onUpdateParty={setParty}
-              onRestart={() => {
-                setParty([])
-                setPhase(PHASES.CHARACTER_CREATION)
-              }}
+              onRestart={restart}
+              initialNodeId={scenarioNodeId}
+              onNodeChange={setScenarioNodeId}
             />
           </section>
         )}
