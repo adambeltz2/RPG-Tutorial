@@ -1,3 +1,17 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-parchment-50: #fdfbf3;
+  --color-parchment-100: #f6ecd2;
+  --color-parchment-200: #ecdcae;
+  --color-parchment-300: #dcc17e;
+
+  --color-ink-300: #a8977a;
+  --color-ink-400: #7c6b4e;
+  --color-ink-500: #5c4d34;
+  --color-ink-600: #463a26;
+  --color-ink-700: #332a1b;
+  --color-ink-900: #241d12;
+
+  --font-mono: "Courier New", Courier, monospace;
+}

@@ -86,25 +86,41 @@ in "Unscheduled / Ideas" below until a new priority tier is organized.
 ## Unscheduled / Ideas
 _(New feature ideas, edge cases, and non-critical bugs get logged here as
 they're discovered, instead of being implemented ad hoc.)_
-- [FEATURE] Scenario nodes support an optional `choice.effect`
-  (`hpDelta`/`goldDelta`, `target: "random"`) resolved by
-  `src/engine/applyEffect.js` — extends the CLAUDE.md scenario-node schema so
-  choices can actually move the needle on HP/gold, not just branch narrative.
-  Introduced in PR #4; consider promoting this to a documented part of the
-  scenario data structure in CLAUDE.md if more scenarios adopt it.
-- [FEATURE] Choices can also carry a `choice.roll` (`sides`, `target`,
-  `successNode`/`failNode`, optional `successEffect`/`failEffect`) resolved
-  in `ScenarioEngine.choose()` — a second schema extension (alongside
-  `choice.effect`) so a choice can branch on a real dice roll instead of a
-  fixed `nextNode`. Introduced in PR #8; worth documenting in CLAUDE.md
-  alongside `choice.effect` if a third scenario schema extension shows up.
+- [x] [FEATURE] Document the `choice.effect` and `choice.roll` scenario-node
+  schema extensions (introduced in PR #4 and PR #8) in `CLAUDE.md` itself,
+  not just `backlog.md`/`CHANGELOG.md`, now that two mechanics depend on
+  them. Affected files: `CLAUDE.md`. (PR #14 — added a full "Choice Schema
+  Extensions" subsection under Data Structures, plus refreshed the stale
+  "Current Status & Next Steps" section that still referenced the very
+  first milestone.)
+- [x] [DEBT] Tailwind CSS is still on 3.x; Tailwind 4 is a separate breaking
+  rewrite (CSS-based config via `@import "tailwindcss"` instead of
+  `tailwind.config.js` + PostCSS plugins) deliberately left out of the
+  Vite 8 upgrade (PR #12) to keep that change focused. Affected files:
+  `tailwind.config.js`, `postcss.config.js`, `src/index.css`,
+  `package.json`, `vite.config.js`. (PR #14 — migrated to Tailwind 4 via
+  the `@tailwindcss/vite` plugin; removed `tailwind.config.js`,
+  `postcss.config.js`, and the `autoprefixer`/`postcss` dependencies
+  entirely; moved the custom `parchment`/`ink` palette and monospace font
+  into a `@theme` block in `src/index.css`. Verified pixel-identical
+  rendering via Playwright, including hover states, before and after.)
 - [DEBT] GitHub Pages hosting (Settings → Pages) needs its Source set to
   "GitHub Actions" for `.github/workflows/deploy.yml` to actually publish —
   this is a one-time repo setting, not something a PR can change. Flagged
   in PR #6 for the repo owner to enable.
-- [DEBT] Tailwind CSS is still on 3.x; Tailwind 4 is a separate breaking
-  rewrite (CSS-based config via `@import "tailwindcss"` instead of
-  `tailwind.config.js` + PostCSS plugins) deliberately left out of the
-  Vite 8 upgrade (PR #12) to keep that change focused. Worth its own PR
-  later. Affected files: `tailwind.config.js`, `postcss.config.js`,
-  `src/index.css`, `package.json`.
+- [DEBT] Every dev-server/build screenshot and Playwright run logs a single
+  harmless `404` for a missing favicon (no `favicon.ico` or `<link rel=
+  "icon">` in `index.html`). Cosmetic/log-noise only, but a two-minute fix:
+  add a favicon (even a plain parchment/dice-themed one) and reference it
+  in `index.html`. Affected files: `index.html`, a new `public/` asset.
+- [PROCESS] Stacked PRs (#7–#12) were each merged successfully but only
+  into their own base branch, not into `main` — since every base was the
+  previous branch in the stack rather than `main`, none of that work
+  actually reached `main` until a manual follow-up integration PR (#13)
+  merged the fully-consolidated tip branch into `main` directly. When
+  stacking PRs again: either retarget/merge them strictly bottom-up
+  (merge the PR into `main` first, then repoint the next PR's base to
+  `main`, and so on up the stack) or open one final PR from the top of
+  the stack straight to `main` once every PR in the chain shows
+  `merged: true`, and confirm with `git log main..<branch>` that the
+  branch is actually ahead of `main` before assuming the work landed.
