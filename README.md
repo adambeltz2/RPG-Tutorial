@@ -10,6 +10,9 @@ rulebook or the game it accompanies.
 Built for personal use, runs entirely in the browser (no backend/database),
 and deploys as a static site (e.g. GitHub Pages).
 
+## Live Demo
+<a href="https://adambeltz2.github.io/RPG-Tutorial/" target="_blank" rel="noopener noreferrer">https://adambeltz2.github.io/RPG-Tutorial/</a>
+
 ## Tech Stack
 - **React** — UI and party/scenario state management
 - **Vite 8** — dev server and static build/export
