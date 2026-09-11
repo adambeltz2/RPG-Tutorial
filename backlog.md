@@ -80,8 +80,49 @@ follow-ups discovered along the way, now organized as the next tier.
   since Tailwind 4 is a separate breaking rewrite out of scope here.
   `npm audit` now reports 0 vulnerabilities.)
 
-All P0–P4 backlog items are complete as of PR #12. Future work starts fresh
-in "Unscheduled / Ideas" below until a new priority tier is organized.
+All P0–P4 backlog items are complete as of PR #12. Found while reviewing the
+codebase against the backlog (2026-09-11) — none of these are implemented
+yet, logged here per the Scope Management protocol rather than fixed ad hoc.
+
+## P5 — Gameplay Correctness & Content Follow-through
+- [ ] [BUG] `PartyBuilder` lets a player reroll an already-equipped hero's
+  gold without resetting `equipment` — since owned items aren't re-charged
+  against the new roll, buy gear, save, reopen the hero, reroll to a lower
+  amount, and keep all the equipment for free. Fix: reset `equipment: []`
+  (or block rerolling) once a hero has purchased items. Affected files:
+  `src/components/PartyBuilder.jsx`.
+- [ ] [BUG] `applyEffect`'s `goldDelta` handling only works correctly for
+  spending (negative deltas) — a positive `goldDelta` (e.g. a reward)
+  dumps the entire amount onto whichever party member is processed first
+  instead of distributing it. Nothing hits this today only because no
+  scenario node uses a positive `goldDelta` yet, but it will silently
+  misbehave the moment one does. Affected files: `src/engine/applyEffect.js`.
+- [ ] [BUG] A restored session's `scenarioNodeId` is trusted without
+  checking it still exists in the current scenario's `nodes` map. The
+  scenario graph has already changed once (PR #10 added `corridor_fork`);
+  a returning visitor with an old session pointing at a since-renamed or
+  removed node will crash on `node.text` (`node` is `undefined`) with no
+  recovery except manually clearing `localStorage`. Fix: validate on load
+  and fall back to `scenario.startNode` (or `character_creation`) if the
+  saved node id isn't found. Affected files: `src/App.jsx`,
+  `src/utils/storage.js`.
+- [ ] [FEATURE] `treasure_found`'s narrative promises "a stash of gold and
+  a masterwork dagger," but no `effect` actually grants gold or adds the
+  dagger to `equipment` — the reward is cosmetic text only. Wire up a real
+  `effect` once the positive-`goldDelta` bug above is fixed. Affected
+  files: `src/data/scenarios/intro.json`.
+- [ ] [FEATURE] "Healing Potion" is purchasable (12 gold) in
+  `EquipmentShop` but has no in-scenario use — nothing ever consumes it or
+  restores HP. Either add a "Drink Healing Potion" action available
+  during encounters (consuming it from `equipment`, healing some HP), or
+  remove it from the shop until it does something. Affected files:
+  `src/data/equipment.js`, `src/engine/ScenarioEngine.jsx`,
+  `src/engine/applyEffect.js`.
+- [ ] [FEATURE] `magic_lesson` narrates "Your Wizard channels arcane
+  energy..." regardless of whether the party actually has a Wizard (or
+  any spellcaster) in it. Consider gating or varying this choice/text on
+  party composition for a more coherent moment. Affected files:
+  `src/data/scenarios/intro.json`, `src/engine/ScenarioEngine.jsx`.
 
 ## Unscheduled / Ideas
 _(New feature ideas, edge cases, and non-critical bugs get logged here as
