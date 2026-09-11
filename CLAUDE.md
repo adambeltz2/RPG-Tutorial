@@ -66,6 +66,8 @@ A node with `"isEnd": true` and `"choices": []` ends the run (`ScenarioEngine` s
     { "label": "Bribe them (Costs 10 Gold)", "nextNode": "goblin_bribe_success", "effect": { "goldDelta": -10 } }
     ```
     `hpDelta`/`goldDelta` are applied party-wide unless `"target": "random"` picks one random *living* (`hp > 0`) member. A negative `goldDelta` (spending) is deducted from the party's pooled gold in member order; a positive `goldDelta` (a reward) is split as evenly as possible across living members (falling back to the whole party if everyone has fallen), with any remainder handed out one gold at a time rather than lost. HP never drops below 0. If an effect brings every member to 0 HP, `ScenarioEngine` overrides the destination to route to a `party_wiped` node instead, if the scenario defines one — this is a scenario-wide game-over safety net, not something each node has to handle itself.
+
+    `effect` can also carry `"itemsGranted": ["Masterwork Dagger"]` to add item(s) to one random living member's `equipment` (falling back to the whole party if everyone has fallen) — combine freely with `hpDelta`/`goldDelta` in the same `effect` object. `PartyTracker` shows each member's carried items during a scenario (`Carrying: ...`, hidden when empty), so a granted item is immediately visible to the player.
 *   **`requiresClass`** — hides the choice entirely unless the party includes at least one member of that class (regardless of HP), so scenario text referencing a specific class (e.g. "Your Wizard channels arcane energy...") is never shown to a party without one:
     ```json
     { "label": "Study the rune with Magic", "nextNode": "magic_lesson", "requiresClass": "Wizard" }

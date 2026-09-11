@@ -27,11 +27,12 @@ an introductory tutorial scenario covering combat, traps, fleeing, and
 magic, now with a fork, a flee-and-retry loop, and a fallen-party game-over
 state), a fantasy storybook visual theme, a GitHub Pages deploy workflow,
 `localStorage` session persistence across reloads, and real d6 dice-roll
-resolution for the combat choice. Unit tests (Vitest) cover the pure logic
-modules and gate CI on every PR. The toolchain is fully current (Vite 8,
-Tailwind 4, `npm audit` clean) and every item in the original P0–P4
-backlog is done — see `backlog.md`'s "Unscheduled / Ideas" for what's
-next, and `CHANGELOG.md` for a per-PR history.
+resolution for the combat choice — plus real reward mechanics (gold and
+item grants visible in `PartyTracker`) and a usable Healing Potion. Unit
+tests (Vitest) cover the pure logic modules and gate CI on every PR. The
+toolchain is fully current (Vite 8, Tailwind 4, `npm audit` clean) and
+every actionable item logged in `backlog.md` to date is done — see there
+for anything newly discovered, and `CHANGELOG.md` for a per-PR history.
 
 ## Getting Started
 ```bash

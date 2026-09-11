@@ -95,7 +95,7 @@
       "id": "treasure_room",
       "text": "Beyond the goblins lies a small chest and a shimmering rune etched into the far wall.",
       "choices": [
-        { "label": "Open the chest", "nextNode": "treasure_found", "effect": { "goldDelta": 30 } },
+        { "label": "Open the chest", "nextNode": "treasure_found", "effect": { "goldDelta": 30, "itemsGranted": ["Masterwork Dagger"] } },
         { "label": "Study the rune with Magic", "nextNode": "magic_lesson", "requiresClass": "Wizard" }
       ]
     },
@@ -103,7 +103,7 @@
       "id": "magic_lesson",
       "text": "Your Wizard channels arcane energy to decipher the rune, revealing a hidden catch on the chest. Magic can solve problems combat cannot.",
       "choices": [
-        { "label": "Open the chest", "nextNode": "treasure_found", "effect": { "goldDelta": 30 } }
+        { "label": "Open the chest", "nextNode": "treasure_found", "effect": { "goldDelta": 30, "itemsGranted": ["Masterwork Dagger"] } }
       ]
     },
     "treasure_found": {

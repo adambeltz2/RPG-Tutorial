@@ -79,6 +79,38 @@ describe('applyEffect', () => {
     const totalGained = next.reduce((sum, m, i) => sum + (m.gold - party[i].gold), 0)
     expect(totalGained).toBe(40)
   })
+
+  it('itemsGranted gives the item(s) to exactly one living member', () => {
+    const party = makeParty()
+    const next = applyEffect({ itemsGranted: ['Masterwork Dagger'] }, party)
+    const recipients = next.filter((m) => m.equipment.includes('Masterwork Dagger'))
+    expect(recipients).toHaveLength(1)
+    expect(recipients[0].hp).toBeGreaterThan(0) // never the fallen Pip
+  })
+
+  it('itemsGranted never touches a fallen member while anyone else lives', () => {
+    for (let i = 0; i < 50; i++) {
+      const party = makeParty()
+      const next = applyEffect({ itemsGranted: ['Torch'] }, party)
+      const pip = next.find((m) => m.id === 3)
+      expect(pip.equipment).toEqual([])
+    }
+  })
+
+  it('itemsGranted falls back to the whole party if everyone has fallen', () => {
+    const party = makeParty().map((m) => ({ ...m, hp: 0 }))
+    const next = applyEffect({ itemsGranted: ['Torch'] }, party)
+    const recipients = next.filter((m) => m.equipment.includes('Torch'))
+    expect(recipients).toHaveLength(1)
+  })
+
+  it('goldDelta and itemsGranted can combine in a single effect', () => {
+    const party = makeParty()
+    const next = applyEffect({ goldDelta: 30, itemsGranted: ['Masterwork Dagger'] }, party)
+    const totalGained = next.reduce((sum, m, i) => sum + (m.gold - party[i].gold), 0)
+    expect(totalGained).toBe(30)
+    expect(next.filter((m) => m.equipment.includes('Masterwork Dagger'))).toHaveLength(1)
+  })
 })
 
 describe('useHealingPotion', () => {
