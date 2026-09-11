@@ -93,12 +93,16 @@ yet, logged here per the Scope Management protocol rather than fixed ad hoc.
   `src/components/PartyBuilder.jsx`. (PR #19 — `DiceRoller`'s `onRoll`
   handler now always resets `equipment: []` alongside the new gold value,
   so a reroll always forces re-purchasing.)
-- [ ] [BUG] `applyEffect`'s `goldDelta` handling only works correctly for
+- [x] [BUG] `applyEffect`'s `goldDelta` handling only works correctly for
   spending (negative deltas) — a positive `goldDelta` (e.g. a reward)
   dumps the entire amount onto whichever party member is processed first
   instead of distributing it. Nothing hits this today only because no
   scenario node uses a positive `goldDelta` yet, but it will silently
   misbehave the moment one does. Affected files: `src/engine/applyEffect.js`.
+  (PR #20 — positive `goldDelta` now splits evenly across living members,
+  falling back to the whole party if everyone has fallen, with any
+  remainder handed out one gold at a time rather than lost. Covered by
+  new tests in `src/engine/applyEffect.test.js`.)
 - [x] [BUG] A restored session's `scenarioNodeId` is trusted without
   checking it still exists in the current scenario's `nodes` map. The
   scenario graph has already changed once (PR #10 added `corridor_fork`);
@@ -112,23 +116,51 @@ yet, logged here per the Scope Management protocol rather than fixed ad hoc.
   `introScenario.nodes` now falls back to `scenario.startNode` instead of
   crashing. Covered by `src/App.test.js`, and verified with a seeded
   `localStorage` session pointing at a nonexistent node via Playwright.)
-- [ ] [FEATURE] `treasure_found`'s narrative promises "a stash of gold and
+- [x] [FEATURE] `treasure_found`'s narrative promises "a stash of gold and
   a masterwork dagger," but no `effect` actually grants gold or adds the
   dagger to `equipment` — the reward is cosmetic text only. Wire up a real
   `effect` once the positive-`goldDelta` bug above is fixed. Affected
-  files: `src/data/scenarios/intro.json`.
-- [ ] [FEATURE] "Healing Potion" is purchasable (12 gold) in
+  files: `src/data/scenarios/intro.json`. (PR #20 — both "Open the chest"
+  choices, from `treasure_room` and `magic_lesson`, now carry `"effect":
+  { "goldDelta": 30 }`, split evenly across the living party. The
+  masterwork dagger remains narrative flavor by deliberate scope choice:
+  `equipment` isn't tracked or displayed anywhere during the scenario
+  phase — only in `EquipmentShop` during character creation — so
+  mechanically granting an item mid-run would be invisible to the player
+  without also building equipment display into `PartyTracker`, which
+  felt like a separate, larger feature. Logged below.)
+- [x] [FEATURE] "Healing Potion" is purchasable (12 gold) in
   `EquipmentShop` but has no in-scenario use — nothing ever consumes it or
   restores HP. Either add a "Drink Healing Potion" action available
   during encounters (consuming it from `equipment`, healing some HP), or
   remove it from the shop until it does something. Affected files:
   `src/data/equipment.js`, `src/engine/ScenarioEngine.jsx`,
-  `src/engine/applyEffect.js`.
-- [ ] [FEATURE] `magic_lesson` narrates "Your Wizard channels arcane
+  `src/engine/applyEffect.js`. (PR #20 — added `maxHp` to created heroes
+  (`PartyBuilder.saveMember`, equal to class base HP), a new pure
+  `useHealingPotion(party, memberId, healAmount = 3)` in `applyEffect.js`,
+  and a "🧪 Heal" button in `PartyTracker` shown per living member who
+  carries a potion and isn't at full HP — clicking it heals 3 HP (capped
+  at `maxHp`) and consumes one potion. Covered by new tests in
+  `applyEffect.test.js` and verified end-to-end with Playwright.)
+- [x] [FEATURE] `magic_lesson` narrates "Your Wizard channels arcane
   energy..." regardless of whether the party actually has a Wizard (or
   any spellcaster) in it. Consider gating or varying this choice/text on
   party composition for a more coherent moment. Affected files:
   `src/data/scenarios/intro.json`, `src/engine/ScenarioEngine.jsx`.
+  (PR #20 — added a generic `choice.requiresClass` schema extension,
+  filtered in `ScenarioEngine` before rendering choices; "Study the rune
+  with Magic" now only appears when the party includes a Wizard. Verified
+  with Playwright that a Wizard-less party never sees the choice.)
+
+All P5 items are now complete. New follow-up discovered while implementing
+them, logged below rather than built ad hoc:
+- [FEATURE] `treasure_found` narrates a "masterwork dagger" reward that
+  isn't mechanically granted (see the P5 item above for why). If this
+  matters, it needs `equipment` displayed somewhere during the scenario
+  phase (currently `PartyTracker` only shows HP/gold) plus an
+  `itemsGranted`-style effect schema extension to actually add it to a
+  member's inventory. A real feature, not a quick fix — worth scoping on
+  its own if wanted.
 
 ## Unscheduled / Ideas
 _(New feature ideas, edge cases, and non-critical bugs get logged here as

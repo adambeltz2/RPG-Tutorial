@@ -95,20 +95,20 @@
       "id": "treasure_room",
       "text": "Beyond the goblins lies a small chest and a shimmering rune etched into the far wall.",
       "choices": [
-        { "label": "Open the chest", "nextNode": "treasure_found" },
-        { "label": "Study the rune with Magic", "nextNode": "magic_lesson" }
+        { "label": "Open the chest", "nextNode": "treasure_found", "effect": { "goldDelta": 30 } },
+        { "label": "Study the rune with Magic", "nextNode": "magic_lesson", "requiresClass": "Wizard" }
       ]
     },
     "magic_lesson": {
       "id": "magic_lesson",
       "text": "Your Wizard channels arcane energy to decipher the rune, revealing a hidden catch on the chest. Magic can solve problems combat cannot.",
       "choices": [
-        { "label": "Open the chest", "nextNode": "treasure_found" }
+        { "label": "Open the chest", "nextNode": "treasure_found", "effect": { "goldDelta": 30 } }
       ]
     },
     "treasure_found": {
       "id": "treasure_found",
-      "text": "Inside the chest: a stash of gold and a masterwork dagger. Tutorial complete — you've learned the basics: combat, traps, fleeing, and magic.",
+      "text": "Inside the chest: a stash of gold, split evenly among your party, and a masterwork dagger tucked beneath it. Tutorial complete — you've learned the basics: combat, traps, fleeing, and magic.",
       "choices": [],
       "isEnd": true
     },

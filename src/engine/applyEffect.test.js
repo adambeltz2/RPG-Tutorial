@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
-import { applyEffect } from './applyEffect.js'
+import { applyEffect, useHealingPotion } from './applyEffect.js'
 
 function makeParty() {
   return [
-    { id: 1, name: 'Thorin', hp: 7, gold: 50 },
-    { id: 2, name: 'Elandra', hp: 5, gold: 30 },
-    { id: 3, name: 'Pip', hp: 0, gold: 10 },
-    { id: 4, name: 'Mira', hp: 4, gold: 5 },
+    { id: 1, name: 'Thorin', hp: 7, maxHp: 7, gold: 50, equipment: [] },
+    { id: 2, name: 'Elandra', hp: 5, maxHp: 5, gold: 30, equipment: [] },
+    { id: 3, name: 'Pip', hp: 0, maxHp: 5, gold: 10, equipment: [] },
+    { id: 4, name: 'Mira', hp: 4, maxHp: 4, gold: 5, equipment: [] },
   ]
 }
 
@@ -57,5 +57,66 @@ describe('applyEffect', () => {
     const next = applyEffect({ goldDelta: -1000 }, party)
     expect(next.every((m) => m.gold >= 0)).toBe(true)
     expect(next.map((m) => m.gold)).toEqual([0, 0, 0, 0])
+  })
+
+  it('positive goldDelta is distributed evenly across living members only', () => {
+    const party = makeParty()
+    // Pip (id 3) is fallen (hp 0) and must not receive a share.
+    const next = applyEffect({ goldDelta: 30 }, party)
+    expect(next.map((m) => m.gold)).toEqual([60, 40, 10, 15]) // +10 each to Thorin/Elandra/Mira
+  })
+
+  it('positive goldDelta remainder is distributed one-by-one rather than lost', () => {
+    const party = makeParty()
+    const next = applyEffect({ goldDelta: 10 }, party) // 10 / 3 living members
+    const totalGained = next.reduce((sum, m, i) => sum + (m.gold - party[i].gold), 0)
+    expect(totalGained).toBe(10)
+  })
+
+  it('positive goldDelta falls back to the whole party if everyone has fallen', () => {
+    const party = makeParty().map((m) => ({ ...m, hp: 0 }))
+    const next = applyEffect({ goldDelta: 40 }, party)
+    const totalGained = next.reduce((sum, m, i) => sum + (m.gold - party[i].gold), 0)
+    expect(totalGained).toBe(40)
+  })
+})
+
+describe('useHealingPotion', () => {
+  function heroWith(overrides) {
+    return { id: 1, name: 'Mira', hp: 2, maxHp: 4, gold: 0, equipment: ['Healing Potion'], ...overrides }
+  }
+
+  it('heals the member and consumes one potion', () => {
+    const party = [heroWith({})]
+    const next = useHealingPotion(party, 1, 3)
+    expect(next[0].hp).toBe(4) // capped at maxHp (2 + 3 -> 5, capped to 4)
+    expect(next[0].equipment).toEqual([])
+  })
+
+  it('never heals past maxHp', () => {
+    const party = [heroWith({ hp: 4 })]
+    const next = useHealingPotion(party, 1, 3)
+    // Already full: no potion should be spent, hp stays capped
+    expect(next[0].hp).toBe(4)
+  })
+
+  it('does nothing for a fallen member (hp <= 0)', () => {
+    const party = [heroWith({ hp: 0 })]
+    const next = useHealingPotion(party, 1, 3)
+    expect(next[0].hp).toBe(0)
+    expect(next[0].equipment).toEqual(['Healing Potion'])
+  })
+
+  it('does nothing if the member has no Healing Potion', () => {
+    const party = [heroWith({ equipment: [] })]
+    const next = useHealingPotion(party, 1, 3)
+    expect(next[0].hp).toBe(2)
+  })
+
+  it('only affects the targeted member', () => {
+    const party = [heroWith({ id: 1 }), heroWith({ id: 2, hp: 1 })]
+    const next = useHealingPotion(party, 2, 3)
+    expect(next.find((m) => m.id === 1)).toEqual(party[0])
+    expect(next.find((m) => m.id === 2).hp).toBe(4)
   })
 })

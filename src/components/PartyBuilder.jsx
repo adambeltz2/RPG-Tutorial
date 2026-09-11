@@ -34,6 +34,7 @@ function PartyBuilder({ party, onChangeParty }) {
       class: draft.class,
       level: 1,
       hp: baseHp,
+      maxHp: baseHp,
       gold: draft.gold ?? 0,
       equipment: draft.equipment,
     }
