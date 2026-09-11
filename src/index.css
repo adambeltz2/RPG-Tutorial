@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --color-parchment-50: #fdfbf3;
+  --color-parchment-50: #fdf8ec;
   --color-parchment-100: #f6ecd2;
   --color-parchment-200: #ecdcae;
   --color-parchment-300: #dcc17e;
@@ -13,5 +13,44 @@
   --color-ink-700: #332a1b;
   --color-ink-900: #241d12;
 
-  --font-mono: "Courier New", Courier, monospace;
+  --font-heading: "Cinzel", "Times New Roman", serif;
+  --font-serif: "EB Garamond", Georgia, "Times New Roman", serif;
+}
+
+/* Aged-parchment page background: a soft light pool at the top fading to a
+   faint vignette at the edges, so panels still read clearly on top of it. */
+@utility parchment-bg {
+  background-color: var(--color-parchment-100);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% 0%, rgba(255, 255, 255, 0.55) 0%, transparent 65%),
+    radial-gradient(ellipse 120% 80% at 50% 100%, rgba(36, 29, 18, 0.14) 0%, transparent 70%);
+}
+
+/* Storybook-page panel: a double rule like a scroll or book-plate border. */
+@utility fantasy-panel {
+  border-width: 3px;
+  border-style: double;
+  border-color: var(--color-ink-500);
+  background-color: var(--color-parchment-50);
+  box-shadow:
+    0 0 0 1px var(--color-parchment-300) inset,
+    0 2px 8px rgba(36, 29, 18, 0.18);
+}
+
+/* A small ornamental rule to replace plain horizontal borders: a double
+   line with a centered mark sitting on top of it. */
+@utility fantasy-divider {
+  position: relative;
+  border-top: 2px double var(--color-ink-400);
+  text-align: center;
+  line-height: 0;
+}
+@utility fantasy-divider-mark {
+  position: relative;
+  top: -0.6em;
+  display: inline-block;
+  background-color: var(--color-parchment-100);
+  color: var(--color-ink-500);
+  font-size: 1rem;
+  padding: 0 0.75rem;
 }

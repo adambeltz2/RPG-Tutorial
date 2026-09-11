@@ -67,20 +67,20 @@ function PartyBuilder({ party, onChangeParty }) {
               key={slotIndex}
               type="button"
               onClick={() => openSlot(slotIndex)}
-              className={`border p-3 text-left ${
-                activeSlot === slotIndex ? 'border-amber-600' : 'border-ink-400 hover:bg-parchment-200'
+              className={`fantasy-panel p-3 text-left ${
+                activeSlot === slotIndex ? '!border-amber-600' : 'hover:bg-parchment-200'
               }`}
             >
               {member ? (
                 <>
-                  <div className="font-bold">{member.name}</div>
-                  <div className="text-xs text-ink-500">{member.class}</div>
-                  <div className="text-xs text-ink-400">
+                  <div className="font-heading tracking-wide text-ink-700">{member.name}</div>
+                  <div className="text-sm italic text-ink-500">{member.class}</div>
+                  <div className="text-sm text-ink-400">
                     HP {member.hp} · {member.gold} gold
                   </div>
                 </>
               ) : (
-                <div className="text-ink-400">Empty slot {slotIndex + 1}</div>
+                <div className="italic text-ink-400">Empty slot {slotIndex + 1}</div>
               )}
             </button>
           )
@@ -88,14 +88,14 @@ function PartyBuilder({ party, onChangeParty }) {
       </div>
 
       {activeSlot !== null && (
-        <div className="border border-ink-400 p-4 space-y-4">
+        <div className="fantasy-panel p-5 space-y-5">
           <div>
-            <label className="block text-sm text-ink-500 mb-1">Name</label>
+            <label className="block text-sm italic text-ink-500 mb-1">Name</label>
             <input
               type="text"
               value={draft.name}
               onChange={(e) => setDraft((d) => ({ ...d, name: e.target.value }))}
-              className="w-full bg-parchment-50 border border-ink-400 px-3 py-2"
+              className="w-full bg-parchment-50 border-2 border-ink-400 px-3 py-2 font-serif focus:outline-none focus:border-amber-600"
               placeholder={`Hero ${activeSlot + 1}`}
             />
           </div>
@@ -108,16 +108,20 @@ function PartyBuilder({ party, onChangeParty }) {
             <EquipmentShop gold={draft.gold} equipment={draft.equipment} onBuy={buyItem} onSell={sellItem} />
           )}
 
-          <div className="flex gap-3">
+          <div className="flex gap-3 pt-1">
             <button
               type="button"
               disabled={!canSave}
               onClick={saveMember}
-              className="px-4 py-2 border border-amber-600 text-amber-700 hover:bg-parchment-200 disabled:opacity-30"
+              className="px-4 py-2 fantasy-panel font-heading tracking-wide text-sm text-amber-700 !border-amber-600 hover:bg-parchment-200 disabled:opacity-30"
             >
               Save Hero
             </button>
-            <button type="button" onClick={closeEditor} className="px-4 py-2 border border-ink-400 hover:bg-parchment-200">
+            <button
+              type="button"
+              onClick={closeEditor}
+              className="px-4 py-2 fantasy-panel font-heading tracking-wide text-sm text-ink-600 hover:bg-parchment-200"
+            >
               Cancel
             </button>
           </div>

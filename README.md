@@ -16,7 +16,7 @@ and deploys as a static site (e.g. GitHub Pages).
 ## Tech Stack
 - **React** — UI and party/scenario state management
 - **Vite 8** — dev server and static build/export
-- **Tailwind CSS 4** — terminal/parchment styling, via `@tailwindcss/vite`
+- **Tailwind CSS 4** — fantasy storybook styling, via `@tailwindcss/vite`
 - **Static JSON/Markdown** — scenario content, no backend database
 
 ## Status
@@ -25,7 +25,7 @@ Creation Wizard (`PartyBuilder`, class selection, starting-gold roller,
 `EquipmentShop`), the Scenario Engine (`ScenarioEngine`, `PartyTracker`, and
 an introductory tutorial scenario covering combat, traps, fleeing, and
 magic, now with a fork, a flee-and-retry loop, and a fallen-party game-over
-state), a terminal/parchment visual theme, a GitHub Pages deploy workflow,
+state), a fantasy storybook visual theme, a GitHub Pages deploy workflow,
 `localStorage` session persistence across reloads, and real d6 dice-roll
 resolution for the combat choice. Unit tests (Vitest) cover the pure logic
 modules and gate CI on every PR. The toolchain is fully current (Vite 8,
