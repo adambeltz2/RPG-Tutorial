@@ -152,15 +152,22 @@ yet, logged here per the Scope Management protocol rather than fixed ad hoc.
   with Magic" now only appears when the party includes a Wizard. Verified
   with Playwright that a Wizard-less party never sees the choice.)
 
-All P5 items are now complete. New follow-up discovered while implementing
-them, logged below rather than built ad hoc:
-- [FEATURE] `treasure_found` narrates a "masterwork dagger" reward that
+All P5 items are now complete, including the equipment-display follow-up:
+- [x] [FEATURE] `treasure_found` narrates a "masterwork dagger" reward that
   isn't mechanically granted (see the P5 item above for why). If this
   matters, it needs `equipment` displayed somewhere during the scenario
   phase (currently `PartyTracker` only shows HP/gold) plus an
   `itemsGranted`-style effect schema extension to actually add it to a
   member's inventory. A real feature, not a quick fix — worth scoping on
-  its own if wanted.
+  its own if wanted. (PR #21 — added a generic `effect.itemsGranted`
+  extension in `applyEffect.js` that adds item(s) to one random living
+  member's `equipment` (falling back to the whole party if everyone has
+  fallen); `treasure_found`'s "Open the chest" choices now grant a
+  "Masterwork Dagger" alongside the gold. `PartyTracker` now shows each
+  member's carried items (`Carrying: ...`, hidden when empty) so the
+  grant is visible during the scenario, not just at character creation.
+  Covered by new tests in `applyEffect.test.js` and verified with
+  Playwright that the dagger actually lands on a party member.)
 
 ## Unscheduled / Ideas
 _(New feature ideas, edge cases, and non-critical bugs get logged here as
@@ -189,11 +196,14 @@ they're discovered, instead of being implemented ad hoc.)_
   in PR #6 for the repo owner to enable. (Done — repo owner enabled it;
   confirmed via the workflow logs and a successful re-run. Live at
   https://adambeltz2.github.io/RPG-Tutorial/, linked from `README.md`.)
-- [DEBT] Every dev-server/build screenshot and Playwright run logs a single
+- [x] [DEBT] Every dev-server/build screenshot and Playwright run logs a single
   harmless `404` for a missing favicon (no `favicon.ico` or `<link rel=
   "icon">` in `index.html`). Cosmetic/log-noise only, but a two-minute fix:
   add a favicon (even a plain parchment/dice-themed one) and reference it
   in `index.html`. Affected files: `index.html`, a new `public/` asset.
+  (PR #21 — added an inline base64-encoded SVG favicon of a die emoji via
+  a `<link rel="icon">` in `index.html`; no separate asset file needed.
+  Confirmed via Playwright that no 404 is logged anymore.)
 - [PROCESS] Stacked PRs (#7–#12) were each merged successfully but only
   into their own base branch, not into `main` — since every base was the
   previous branch in the stack rather than `main`, none of that work
@@ -217,3 +227,8 @@ they're discovered, instead of being implemented ad hoc.)_
   everywhere; added themed touches (⚔️/📜/🎲/↺ and an ornamental divider
   mark). Verified with Playwright that the full playthrough, dice-roll
   banner, and party-wipe screens all still render correctly and legibly.)
+
+Every actionable item logged to date is complete as of PR #21 — the only
+open entry left is the `[PROCESS]` note above, which is informational (a
+lesson learned) rather than something to build. New work starts fresh here
+as it's discovered.

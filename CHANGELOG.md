@@ -4,6 +4,27 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #21 — Favicon and Real Equipment Rewards
+- Added an inline base64-encoded SVG favicon (a die emoji) via a
+  `<link rel="icon">` in `index.html` — no separate asset file needed.
+  Eliminates the harmless-but-noisy 404 that showed up on every
+  dev-server/build run.
+- Added a generic `effect.itemsGranted` extension in `applyEffect.js`
+  that adds item(s) to one random living party member's `equipment`
+  (falling back to the whole party if everyone has fallen), combinable
+  with `hpDelta`/`goldDelta` in the same effect.
+- `treasure_found`'s "Open the chest" choices now grant a "Masterwork
+  Dagger" alongside the gold, matching the narrative for the first time.
+- `PartyTracker` now shows each member's carried items ("Carrying: ...",
+  hidden when the list is empty) during a scenario, so a granted item is
+  actually visible to the player instead of only showing up in
+  `EquipmentShop` during character creation.
+- Documented `itemsGranted` and the new `PartyTracker` equipment display
+  in `CLAUDE.md`. Added 4 new tests to `applyEffect.test.js` (26 total).
+- Verified with Playwright that the dagger lands on a party member and
+  displays correctly, and that the favicon 404 is gone.
+- Closes out every actionable item in `backlog.md` to date.
+
 ### PR #20 — Complete the P5 Backlog: Rewards, Healing, Class-Gated Choices
 - Fixed `applyEffect`'s `goldDelta` for positive amounts (rewards): now
   splits evenly across living party members (falling back to the whole

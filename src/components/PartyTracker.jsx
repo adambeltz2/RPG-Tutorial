@@ -2,31 +2,38 @@ function PartyTracker({ party, onUsePotion }) {
   return (
     <aside className="fantasy-panel p-4">
       <h3 className="font-heading text-sm tracking-wide text-ink-700 mb-3">⚜ The Fellowship</h3>
-      <ul className="space-y-2">
+      <ul className="space-y-3">
         {party.map((member) => {
           const maxHp = member.maxHp ?? member.hp
           const canDrinkPotion =
             onUsePotion && member.hp > 0 && member.hp < maxHp && member.equipment.includes('Healing Potion')
           return (
-            <li key={member.id} className="flex items-center justify-between text-sm gap-2">
-              <span className={member.hp <= 0 ? 'line-through text-ink-300' : ''}>
-                {member.name} <span className="italic text-ink-400">({member.class})</span>
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="font-heading text-amber-700">
-                  {member.hp} HP · {member.gold}g
+            <li key={member.id} className="text-sm">
+              <div className="flex items-center justify-between gap-2">
+                <span className={member.hp <= 0 ? 'line-through text-ink-300' : ''}>
+                  {member.name} <span className="italic text-ink-400">({member.class})</span>
                 </span>
-                {canDrinkPotion && (
-                  <button
-                    type="button"
-                    onClick={() => onUsePotion(member.id)}
-                    className="fantasy-panel px-2 py-0.5 text-xs hover:bg-parchment-200"
-                    title="Drink a Healing Potion"
-                  >
-                    🧪 Heal
-                  </button>
-                )}
-              </span>
+                <span className="flex items-center gap-2">
+                  <span className="font-heading text-amber-700">
+                    {member.hp} HP · {member.gold}g
+                  </span>
+                  {canDrinkPotion && (
+                    <button
+                      type="button"
+                      onClick={() => onUsePotion(member.id)}
+                      className="fantasy-panel px-2 py-0.5 text-xs hover:bg-parchment-200"
+                      title="Drink a Healing Potion"
+                    >
+                      🧪 Heal
+                    </button>
+                  )}
+                </span>
+              </div>
+              {member.equipment.length > 0 && (
+                <div className="text-xs italic text-ink-400 mt-0.5">
+                  Carrying: {member.equipment.join(', ')}
+                </div>
+              )}
             </li>
           )
         })}

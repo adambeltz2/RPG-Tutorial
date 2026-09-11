@@ -35,6 +35,15 @@ export function applyEffect(effect, party) {
     })
   }
 
+  if (effect.itemsGranted?.length) {
+    const livingIdx = next.reduce((acc, m, i) => (m.hp > 0 ? [...acc, i] : acc), [])
+    const recipients = livingIdx.length ? livingIdx : next.map((_, i) => i)
+    const recipientIdx = recipients[Math.floor(Math.random() * recipients.length)]
+    next = next.map((m, i) =>
+      i === recipientIdx ? { ...m, equipment: [...m.equipment, ...effect.itemsGranted] } : m,
+    )
+  }
+
   return next
 }
 
