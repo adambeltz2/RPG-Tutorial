@@ -11,10 +11,16 @@ const PHASES = {
 
 const savedSession = loadSession()
 
+export function isValidNodeId(nodeId) {
+  return typeof nodeId === 'string' && Object.prototype.hasOwnProperty.call(introScenario.nodes, nodeId)
+}
+
 function App() {
   const [phase, setPhase] = useState(savedSession?.phase ?? PHASES.CHARACTER_CREATION)
   const [party, setParty] = useState(savedSession?.party ?? [])
-  const [scenarioNodeId, setScenarioNodeId] = useState(savedSession?.scenarioNodeId ?? introScenario.startNode)
+  const [scenarioNodeId, setScenarioNodeId] = useState(
+    isValidNodeId(savedSession?.scenarioNodeId) ? savedSession.scenarioNodeId : introScenario.startNode,
+  )
 
   useEffect(() => {
     saveSession({ phase, party, scenarioNodeId })

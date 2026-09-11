@@ -85,19 +85,21 @@ codebase against the backlog (2026-09-11) — none of these are implemented
 yet, logged here per the Scope Management protocol rather than fixed ad hoc.
 
 ## P5 — Gameplay Correctness & Content Follow-through
-- [ ] [BUG] `PartyBuilder` lets a player reroll an already-equipped hero's
+- [x] [BUG] `PartyBuilder` lets a player reroll an already-equipped hero's
   gold without resetting `equipment` — since owned items aren't re-charged
   against the new roll, buy gear, save, reopen the hero, reroll to a lower
   amount, and keep all the equipment for free. Fix: reset `equipment: []`
   (or block rerolling) once a hero has purchased items. Affected files:
-  `src/components/PartyBuilder.jsx`.
+  `src/components/PartyBuilder.jsx`. (PR #19 — `DiceRoller`'s `onRoll`
+  handler now always resets `equipment: []` alongside the new gold value,
+  so a reroll always forces re-purchasing.)
 - [ ] [BUG] `applyEffect`'s `goldDelta` handling only works correctly for
   spending (negative deltas) — a positive `goldDelta` (e.g. a reward)
   dumps the entire amount onto whichever party member is processed first
   instead of distributing it. Nothing hits this today only because no
   scenario node uses a positive `goldDelta` yet, but it will silently
   misbehave the moment one does. Affected files: `src/engine/applyEffect.js`.
-- [ ] [BUG] A restored session's `scenarioNodeId` is trusted without
+- [x] [BUG] A restored session's `scenarioNodeId` is trusted without
   checking it still exists in the current scenario's `nodes` map. The
   scenario graph has already changed once (PR #10 added `corridor_fork`);
   a returning visitor with an old session pointing at a since-renamed or
@@ -105,7 +107,11 @@ yet, logged here per the Scope Management protocol rather than fixed ad hoc.
   recovery except manually clearing `localStorage`. Fix: validate on load
   and fall back to `scenario.startNode` (or `character_creation`) if the
   saved node id isn't found. Affected files: `src/App.jsx`,
-  `src/utils/storage.js`.
+  `src/utils/storage.js`. (PR #19 — added an exported `isValidNodeId`
+  check in `App.jsx`; a saved `scenarioNodeId` that isn't a real key in
+  `introScenario.nodes` now falls back to `scenario.startNode` instead of
+  crashing. Covered by `src/App.test.js`, and verified with a seeded
+  `localStorage` session pointing at a nonexistent node via Playwright.)
 - [ ] [FEATURE] `treasure_found`'s narrative promises "a stash of gold and
   a masterwork dagger," but no `effect` actually grants gold or adds the
   dagger to `equipment` — the reward is cosmetic text only. Wire up a real

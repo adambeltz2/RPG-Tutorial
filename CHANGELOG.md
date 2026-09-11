@@ -4,6 +4,24 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #19 — Fix Equipment-Reroll Exploit and Stale-Session Crash
+- `PartyBuilder`'s `DiceRoller.onRoll` handler now resets `equipment: []`
+  whenever a hero's gold is rerolled, closing an exploit where a player
+  could buy gear, reroll to a lower gold amount, and keep the equipment
+  for free since it was never re-charged against the new roll.
+- `App.jsx` now validates a restored session's `scenarioNodeId` against
+  the current scenario's `nodes` map (new exported `isValidNodeId`
+  helper) before trusting it, falling back to `scenario.startNode`
+  instead of crashing on `node.text` when a returning visitor's saved
+  node id no longer exists (the scenario graph has already changed once,
+  in PR #10, so this was a real risk).
+- Added `src/App.test.js` covering `isValidNodeId` against every real
+  intro-scenario node id, a nonexistent id, and non-string/missing input.
+- Fixes the first two items in the P5 backlog tier; the remaining P5
+  items (positive `goldDelta` distribution, `treasure_found`'s cosmetic
+  reward, unusable Healing Potion, and `magic_lesson`'s Wizard reference)
+  are unchanged.
+
 ### PR #17 — Fantasy Storybook Visual Redesign
 - Added Google Fonts **Cinzel** (headings) and **EB Garamond** (body text)
   via `index.html`, replacing the flat monospace/terminal look.
