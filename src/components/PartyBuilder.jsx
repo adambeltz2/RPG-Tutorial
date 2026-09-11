@@ -102,7 +102,7 @@ function PartyBuilder({ party, onChangeParty }) {
 
           <ClassSelector value={draft.class} onChange={(cls) => setDraft((d) => ({ ...d, class: cls }))} />
 
-          <DiceRoller gold={draft.gold} onRoll={(gold) => setDraft((d) => ({ ...d, gold }))} />
+          <DiceRoller gold={draft.gold} onRoll={(gold) => setDraft((d) => ({ ...d, gold, equipment: [] }))} />
 
           {draft.gold != null && (
             <EquipmentShop gold={draft.gold} equipment={draft.equipment} onBuy={buyItem} onSell={sellItem} />
