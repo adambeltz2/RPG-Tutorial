@@ -4,6 +4,41 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #20 — Complete the P5 Backlog: Rewards, Healing, Class-Gated Choices
+- Fixed `applyEffect`'s `goldDelta` for positive amounts (rewards): now
+  splits evenly across living party members (falling back to the whole
+  party if everyone has fallen), handing out any remainder one gold at a
+  time instead of dumping the whole amount on the first member.
+- Wired a real reward into `treasure_found`: both "Open the chest"
+  choices (from `treasure_room` and `magic_lesson`) now carry
+  `"effect": { "goldDelta": 30 }`, matching the narrative's "stash of
+  gold" line. The masterwork dagger stays flavor-only by deliberate
+  scope choice — logged as a follow-up since granting it mechanically
+  would need equipment displayed during the scenario phase, which is a
+  separate feature.
+- Added a real Healing Potion mechanic: `PartyBuilder.saveMember` now
+  sets `maxHp` on created heroes (equal to class base HP); a new pure
+  `useHealingPotion(party, memberId, healAmount = 3)` in
+  `applyEffect.js` heals a living, non-full member and consumes one
+  potion from their `equipment`; `PartyTracker` shows a "🧪 Heal" button
+  per eligible member, wired through `ScenarioEngine`.
+- Added a generic `choice.requiresClass` schema extension — a choice is
+  hidden unless the party includes at least one member of that class.
+  Applied to `magic_lesson`'s "Study the rune with Magic" choice so it
+  never appears (and its "Your Wizard channels..." text is never shown)
+  to a party without a Wizard.
+- Documented `maxHp`, the Healing Potion mechanic, the corrected
+  `goldDelta` behavior, and `requiresClass` in `CLAUDE.md`.
+- Added 11 new unit tests (`applyEffect.test.js`) covering positive
+  `goldDelta` distribution and `useHealingPotion`'s edge cases (heal,
+  cap at `maxHp`, no-op when fallen, no-op without a potion, only
+  affects the targeted member) — 22 tests total, all passing.
+- Verified end-to-end with Playwright: the gold reward split correctly
+  across a full 4-member party; a Wizard-less party never saw the magic
+  choice; a hero hit by the trap drank her own potion, healed, and the
+  Heal button correctly disappeared afterward.
+- Completes the entire P5 backlog tier.
+
 ### PR #19 — Fix Equipment-Reroll Exploit and Stale-Session Crash
 - `PartyBuilder`'s `DiceRoller.onRoll` handler now resets `equipment: []`
   whenever a hero's gold is rerolled, closing an exploit where a player

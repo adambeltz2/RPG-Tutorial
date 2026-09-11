@@ -36,12 +36,14 @@ It is designed for **personal use** and built to run entirely in the browser wit
       "class": "Dwarf",
       "level": 1,
       "hp": 6,
+      "maxHp": 6,
       "gold": 12,
       "equipment": ["Hand Weapon", "Shield"]
     }
   ]
 }
 ```
+`maxHp` is set once at character creation (equal to the class's base HP) and never changes; `hp` is the current, mutable value healing/damage effects clamp against. A member carrying a "Healing Potion" can drink it from `PartyTracker` during a scenario (`src/engine/applyEffect.js`'s `useHealingPotion`) to heal a few HP and consume the potion — only available while `hp > 0` and `hp < maxHp`.
 
 **Scenario File Shape:** each file under `src/data/scenarios/` is `{ startNode, nodes }`, where `nodes` is a map of node id → node. `ScenarioEngine` walks this graph starting at `startNode`.
 
@@ -63,7 +65,12 @@ A node with `"isEnd": true` and `"choices": []` ends the run (`ScenarioEngine` s
     ```json
     { "label": "Bribe them (Costs 10 Gold)", "nextNode": "goblin_bribe_success", "effect": { "goldDelta": -10 } }
     ```
-    `hpDelta`/`goldDelta` are applied party-wide unless `"target": "random"` picks one random *living* (`hp > 0`) member. Gold is deducted from the party's pooled gold in member order; HP never drops below 0. If an effect brings every member to 0 HP, `ScenarioEngine` overrides the destination to route to a `party_wiped` node instead, if the scenario defines one — this is a scenario-wide game-over safety net, not something each node has to handle itself.
+    `hpDelta`/`goldDelta` are applied party-wide unless `"target": "random"` picks one random *living* (`hp > 0`) member. A negative `goldDelta` (spending) is deducted from the party's pooled gold in member order; a positive `goldDelta` (a reward) is split as evenly as possible across living members (falling back to the whole party if everyone has fallen), with any remainder handed out one gold at a time rather than lost. HP never drops below 0. If an effect brings every member to 0 HP, `ScenarioEngine` overrides the destination to route to a `party_wiped` node instead, if the scenario defines one — this is a scenario-wide game-over safety net, not something each node has to handle itself.
+*   **`requiresClass`** — hides the choice entirely unless the party includes at least one member of that class (regardless of HP), so scenario text referencing a specific class (e.g. "Your Wizard channels arcane energy...") is never shown to a party without one:
+    ```json
+    { "label": "Study the rune with Magic", "nextNode": "magic_lesson", "requiresClass": "Wizard" }
+    ```
+    Filtered in `ScenarioEngine` before rendering the choice list — combine with `effect`/`roll` freely.
 *   **`roll`** — branches on a real dice roll instead of a fixed `nextNode`:
     ```json
     {

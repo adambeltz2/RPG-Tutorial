@@ -1,16 +1,23 @@
 import { useState } from 'react'
 import PartyTracker from '../components/PartyTracker.jsx'
-import { applyEffect } from './applyEffect.js'
+import { applyEffect, useHealingPotion } from './applyEffect.js'
 import { rollDie } from '../utils/dice.js'
 
 function ScenarioEngine({ scenario, party, onUpdateParty, onRestart, initialNodeId, onNodeChange }) {
   const [currentNodeId, setCurrentNodeId] = useState(initialNodeId ?? scenario.startNode)
   const [lastRoll, setLastRoll] = useState(null)
   const node = scenario.nodes[currentNodeId]
+  const visibleChoices = (node.choices ?? []).filter(
+    (choice) => !choice.requiresClass || party.some((m) => m.class === choice.requiresClass),
+  )
 
   function goTo(nodeId) {
     setCurrentNodeId(nodeId)
     onNodeChange?.(nodeId)
+  }
+
+  function usePotion(memberId) {
+    onUpdateParty(useHealingPotion(party, memberId))
   }
 
   function applyAndNavigate(effect, nextNodeId) {
@@ -56,7 +63,7 @@ function ScenarioEngine({ scenario, party, onUpdateParty, onRestart, initialNode
           </button>
         ) : (
           <div className="flex flex-col gap-2">
-            {node.choices.map((choice) => (
+            {visibleChoices.map((choice) => (
               <button
                 key={choice.label}
                 type="button"
@@ -70,7 +77,7 @@ function ScenarioEngine({ scenario, party, onUpdateParty, onRestart, initialNode
         )}
       </div>
 
-      <PartyTracker party={party} />
+      <PartyTracker party={party} onUsePotion={usePotion} />
     </div>
   )
 }
