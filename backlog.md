@@ -104,10 +104,12 @@ they're discovered, instead of being implemented ad hoc.)_
   entirely; moved the custom `parchment`/`ink` palette and monospace font
   into a `@theme` block in `src/index.css`. Verified pixel-identical
   rendering via Playwright, including hover states, before and after.)
-- [DEBT] GitHub Pages hosting (Settings → Pages) needs its Source set to
+- [x] [DEBT] GitHub Pages hosting (Settings → Pages) needs its Source set to
   "GitHub Actions" for `.github/workflows/deploy.yml` to actually publish —
   this is a one-time repo setting, not something a PR can change. Flagged
-  in PR #6 for the repo owner to enable.
+  in PR #6 for the repo owner to enable. (Done — repo owner enabled it;
+  confirmed via the workflow logs and a successful re-run. Live at
+  https://adambeltz2.github.io/RPG-Tutorial/, linked from `README.md`.)
 - [DEBT] Every dev-server/build screenshot and Playwright run logs a single
   harmless `404` for a missing favicon (no `favicon.ico` or `<link rel=
   "icon">` in `index.html`). Cosmetic/log-noise only, but a two-minute fix:
@@ -124,3 +126,15 @@ they're discovered, instead of being implemented ad hoc.)_
   the stack straight to `main` once every PR in the chain shows
   `merged: true`, and confirm with `git log main..<branch>` that the
   branch is actually ahead of `main` before assuming the work landed.
+- [x] [FEATURE] Redesign the visual theme for a fantasy/storybook feel
+  rather than the flat terminal-style look, while staying highly readable.
+  Affected files: `index.html`, `src/index.css`, `src/App.jsx`, and every
+  component in `src/components/` and `src/engine/`. (Added Google Fonts
+  Cinzel (headings) and EB Garamond (body) via `index.html`; added
+  `parchment-bg`, `fantasy-panel`, and `fantasy-divider`/`fantasy-divider-
+  mark` custom Tailwind v4 `@utility` classes in `src/index.css` — a soft
+  parchment vignette background and ornate double-bordered "scroll" panels
+  used throughout; swapped `font-mono` for `font-serif`/`font-heading`
+  everywhere; added themed touches (⚔️/📜/🎲/↺ and an ornamental divider
+  mark). Verified with Playwright that the full playthrough, dice-roll
+  banner, and party-wipe screens all still render correctly and legibly.)

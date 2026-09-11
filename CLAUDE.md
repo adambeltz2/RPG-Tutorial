@@ -103,7 +103,7 @@ A node with `"isEnd": true` and `"choices": []` ends the run (`ScenarioEngine` s
 *   **Primary Ecosystem:** React + Vite (JavaScript/TypeScript, client-side only — no backend or database).
 *   **Frontend Framework:** React — handles the complex state management of a four-character party.
 *   **Build Tool:** Vite — fast, modern frontend tooling with easy static exporting.
-*   **Styling:** Tailwind CSS — rapid UI development with a clean, terminal/parchment aesthetic.
+*   **Styling:** Tailwind CSS — rapid UI development with a fantasy storybook aesthetic (aged parchment, ornate double-bordered panels, a display serif for headings and a book serif for body text) that stays highly readable.
 *   **Data Storage:** Local component state for active sessions; static JSON or Markdown files for scenario data. No backend database.
 *   **Infrastructure:** Static hosting only (e.g., GitHub Pages). No servers, containers, or cloud infrastructure.
 *   **Automation & Data:** Static JSON/Markdown scenario files authored and versioned in-repo; no external data pipelines.

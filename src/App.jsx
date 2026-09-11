@@ -30,19 +30,27 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-parchment-100 text-ink-700 font-mono">
-      <header className="border-b border-ink-400 p-4">
-        <h1 className="text-xl">Four Against Darkness — Web Tutorial</h1>
+    <div className="min-h-screen parchment-bg text-ink-700 font-serif">
+      <header className="px-6 pt-8 pb-5 text-center">
+        <h1 className="font-heading text-2xl md:text-3xl tracking-wide text-ink-700">
+          Four Against Darkness
+        </h1>
+        <p className="mt-1 italic text-ink-500">A Web Companion for the Tabletop Adventure</p>
+        <div className="fantasy-divider mt-5 max-w-md mx-auto" role="presentation">
+          <span className="fantasy-divider-mark">⚜</span>
+        </div>
       </header>
 
-      <main className="p-6">
+      <main className="px-6 pb-10 max-w-5xl mx-auto">
         {phase === PHASES.CHARACTER_CREATION && (
           <section>
-            <h2 className="text-lg mb-4">Character Creation Wizard</h2>
+            <h2 className="font-heading text-xl tracking-wide text-ink-700 mb-4">
+              ⚔️ Character Creation
+            </h2>
             <PartyBuilder party={party} onChangeParty={setParty} />
             <button
               type="button"
-              className="mt-6 px-4 py-2 border border-ink-500 hover:bg-parchment-200 disabled:opacity-30"
+              className="mt-6 px-5 py-2 fantasy-panel font-heading tracking-wide text-ink-700 hover:bg-parchment-200 disabled:opacity-30 disabled:cursor-not-allowed"
               disabled={readyCount < 4}
               onClick={() => setPhase(PHASES.SCENARIO_RUNNER)}
             >
@@ -53,7 +61,9 @@ function App() {
 
         {phase === PHASES.SCENARIO_RUNNER && (
           <section>
-            <h2 className="text-lg mb-4">Scenario Engine</h2>
+            <h2 className="font-heading text-xl tracking-wide text-ink-700 mb-4">
+              📜 The Adventure Unfolds
+            </h2>
             <ScenarioEngine
               scenario={introScenario}
               party={party}

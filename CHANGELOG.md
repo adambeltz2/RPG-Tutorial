@@ -4,6 +4,27 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #17 — Fantasy Storybook Visual Redesign
+- Added Google Fonts **Cinzel** (headings) and **EB Garamond** (body text)
+  via `index.html`, replacing the flat monospace/terminal look.
+- Added `parchment-bg` (a soft radial-gradient parchment vignette),
+  `fantasy-panel` (an ornate double-bordered "scroll" panel style), and
+  `fantasy-divider`/`fantasy-divider-mark` (an ornamental rule with a
+  centered mark) as custom Tailwind v4 `@utility` classes in
+  `src/index.css`.
+- Applied the new theme across `App.jsx` and every component
+  (`PartyBuilder`, `ClassSelector`, `DiceRoller`, `EquipmentShop`,
+  `PartyTracker`, `ScenarioEngine`): swapped `font-mono` for
+  `font-serif`/`font-heading`, replaced plain borders with `fantasy-panel`,
+  italicized secondary labels for a book-like feel, and added small themed
+  touches (⚔️ Character Creation, 📜 The Adventure Unfolds, 🎲 Roll for
+  Gold, ↺ Restart Tutorial, ⚜ The Fellowship).
+- Updated the styling description in `CLAUDE.md` and `README.md` from
+  "terminal/parchment" to "fantasy storybook."
+- Verified with Playwright that the full playthrough, the dice-roll
+  success/failure banners, and the party-wipe game-over screen all still
+  render correctly and legibly under the new theme.
+
 ### PR #14 — Tailwind 4 Migration + CLAUDE.md Schema Docs
 - Migrated Tailwind CSS 3 → 4 via the `@tailwindcss/vite` plugin: removed
   `tailwind.config.js`, `postcss.config.js`, and the `postcss`/
