@@ -248,7 +248,14 @@ below, added per direct user request rather than discovered incidentally:
   the underlying choice-based engine as-is rather than rebuilding around
   literal per-hero combat rounds, per explicit user decision when asked.
   Verified with Playwright across the full playthrough, both class-gated
-  and Wizard-present paths, and the party-wipe screen.)
+  and Wizard-present paths, and the party-wipe screen. Follow-up, same PR:
+  per user direction to assume the player knows nothing — not just about
+  the app but about tabletop RPGs and dice games generally — deepened the
+  Setup welcome note, the "Choosing a Class" note, and the `goblin_room`
+  guide text to define "party," "class," "HP," "turn," dice notation
+  ("d6"), and "Level 3" difficulty labels from first principles instead of
+  assuming any prior familiarity. Re-verified with Playwright and the full
+  regression suite; no logic changed.)
 
 Every actionable item logged to date is complete as of PR #22 — the only
 open entry left is the `[PROCESS]` note above, which is informational (a

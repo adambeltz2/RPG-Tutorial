@@ -61,7 +61,7 @@
       "id": "goblin_room",
       "turn": 5,
       "text": "Two goblins turn and snarl at you. They are Level 3 minions. Combat, bribery, and fleeing are all valid tactics — Four Against Darkness rewards good judgement over brute force.",
-      "guide": "This is a full Encounter turn — the heart of the game. You have three standard responses: Fight (roll to resolve combat), Bribe (spend gold to skip the fight entirely), or Flee (retreat and try a different approach). All three are equally legitimate strategies.",
+      "guide": "This is a full Encounter turn — the heart of the game (\"Level 3\" is just a difficulty rating for the goblins; nothing you need to calculate). You have three standard responses: Fight (roll a die to resolve combat — you'll need to roll 4 or higher on a d6, meaning a standard six-sided die, for your attack to land), Bribe (spend gold to skip the fight entirely), or Flee (retreat and try a different approach). All three are equally legitimate strategies.",
       "choices": [
         {
           "label": "Fight them (Roll Attack)",

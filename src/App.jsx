@@ -54,16 +54,36 @@ function App() {
             <h2 className="font-heading text-xl tracking-wide text-ink-700 mb-4">
               ⚔️ Character Creation
             </h2>
-            <GuideNote title="Setup — Building Your Party">
-              In Four Against Darkness, every adventure begins by assembling a
-              party of <strong>four</strong> heroes. Click each empty slot below
-              to create one: give them a name, pick a class (this decides their
-              starting Hit Points — how much damage they can take before
-              falling), roll for starting gold, and spend it in the equipment
-              shop. There's no wrong way to build a party, but a mix of classes
-              (a tough front-liner, a Wizard for magic, etc.) tends to handle
-              the dungeon's variety of threats better than four of the same
-              class.
+            <GuideNote title="Welcome — How This Works">
+              <strong>Four Against Darkness</strong> is a tabletop dungeon-crawling
+              game you can play solo or with friends: you control a team of
+              four adventurers (called your <strong>party</strong>) exploring a
+              monster-filled dungeon, room by room. You don't need to have
+              played a tabletop RPG before — this guide explains everything as
+              it comes up.
+              <br />
+              <br />
+              First comes <strong>Setup</strong>: build your party of four
+              heroes below. Click each empty slot to create one — give them a
+              name, pick a <strong>class</strong> (a profession like Warrior or
+              Wizard; it decides their starting <strong>Hit Points (HP)</strong>,
+              which is how much damage they can take before falling
+              unconscious and being out of the fight), roll for starting gold,
+              and spend it in the equipment shop. There's no wrong way to build
+              a party, but mixing classes (a tough front-liner plus a Wizard
+              for magic, say) tends to handle the dungeon's variety of threats
+              better than four of the same class.
+              <br />
+              <br />
+              Once your party is ready, you'll click "Begin Adventure" and
+              start exploring. From there, the adventure moves one{' '}
+              <strong>turn</strong> at a time — each turn describes a situation
+              and gives you a choice. Sometimes the outcome is certain (you
+              just pick a path); other times it's uncertain, and you'll{' '}
+              <strong>roll a die</strong> to decide it — you'll see this written
+              as "d6", which just means a six-sided die numbered 1–6. A
+              note like this one will appear on every turn to explain what's
+              actually happening and why it matters.
             </GuideNote>
             <div className="mt-4">
               <PartyBuilder party={party} onChangeParty={setParty} />

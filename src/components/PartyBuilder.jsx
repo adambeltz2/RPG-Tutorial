@@ -105,11 +105,14 @@ function PartyBuilder({ party, onChangeParty }) {
           <div className="space-y-2">
             <ClassSelector value={draft.class} onChange={(cls) => setDraft((d) => ({ ...d, class: cls }))} />
             <GuideNote title="Choosing a Class">
-              Class sets your hero's starting Hit Points (shown on each card) —
-              higher HP means they can survive more hits before falling in
-              combat. Warriors and Barbarians are tough front-line fighters;
-              Wizards are fragile but bring magic the party can't get any other
-              way (like <em>Study the Rune</em> later in the dungeon).
+              A hero's "class" is basically their profession — it's what kind
+              of adventurer they are, and it decides their starting Hit Points
+              (HP, shown on each card): the number of "hits" they can take
+              before falling unconscious and being out of the fight. Higher HP
+              means tougher. Warriors and Barbarians are strong front-line
+              fighters with lots of HP; Wizards have very little HP but bring
+              magic the party can't get any other way (like{' '}
+              <em>Study the Rune</em> later in the dungeon).
             </GuideNote>
           </div>
 

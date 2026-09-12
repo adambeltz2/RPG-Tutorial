@@ -25,6 +25,22 @@ All notable changes to this project are logged here, one entry per PR.
   notes render correctly throughout without disrupting existing behavior;
   all 26 existing tests still pass unchanged (this was a content/UI-only
   change, no logic modified).
+- **Follow-up deepening pass (same PR):** per explicit user direction to
+  assume the player knows nothing — not just about this app, but about
+  tabletop RPGs and dice games in general — rewrote the guide text in three
+  places to define terms from scratch rather than assume familiarity:
+  the Character Creation `GuideNote` in `App.jsx` (now "Welcome — How This
+  Works," defining what FAD even is, "party," "class," "Hit Points (HP),"
+  "turn," and dice notation like "d6" before the player ever sees them
+  used); the "Choosing a Class" `GuideNote` in `PartyBuilder.jsx` (now
+  spells out that a "class" is a profession and what HP represents in
+  plain terms); and `goblin_room`'s `guide` string in
+  `src/data/scenarios/intro.json` (now explains "Level 3" is a
+  non-calculated difficulty label, and spells out the "roll 4+ on a d6"
+  combat mechanic instead of assuming the player already knows what a d6
+  is). Re-verified with Playwright (Welcome note and the goblin room turn)
+  and re-ran the full existing regression scripts; all 26 tests and the
+  production build still pass unchanged.
 
 ### PR #21 — Favicon and Real Equipment Rewards
 - Added an inline base64-encoded SVG favicon (a die emoji) via a
