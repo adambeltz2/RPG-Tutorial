@@ -4,6 +4,28 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #22 — Guide-Heavy Setup and Turn-by-Turn Rules Teaching
+- Added `src/components/GuideNote.jsx`, a reusable callout (dashed border,
+  "📖 [title]" label) visually distinct from the game's own `fantasy-panel`
+  UI elements, for rules-teaching prose separate from narrative/story text.
+- Character Creation now opens with a Setup overview (`GuideNote` in
+  `App.jsx`) explaining party assembly, plus a `GuideNote` under each of
+  Class, Starting Gold, and Equipment in `PartyBuilder` explaining what
+  that step means and why it matters in FAD terms.
+- Every node in `src/data/scenarios/intro.json` gained a `turn` number
+  (shown by `ScenarioEngine` as a small "TURN N" label) and a `guide`
+  string explaining the actual FAD mechanic behind that turn — e.g. why
+  fight/bribe/flee are all legitimate, what a failed attack roll costs
+  and why, why fleeing is free. `ScenarioEngine` renders `node.guide` in
+  a `GuideNote` beneath the narrative text whenever present.
+- Documented the `turn`/`guide` node fields in `CLAUDE.md`'s Scenario Node
+  Example, framing the experience as deliberately guide-heavy.
+- Verified with Playwright across the full playthrough (including the
+  Wizard-gated and Wizard-less paths) and the party-wipe screen that guide
+  notes render correctly throughout without disrupting existing behavior;
+  all 26 existing tests still pass unchanged (this was a content/UI-only
+  change, no logic modified).
+
 ### PR #21 — Favicon and Real Equipment Rewards
 - Added an inline base64-encoded SVG favicon (a die emoji) via a
   `<link rel="icon">` in `index.html` — no separate asset file needed.

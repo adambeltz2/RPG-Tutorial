@@ -2,6 +2,7 @@ import { useState } from 'react'
 import ClassSelector from './ClassSelector.jsx'
 import DiceRoller from './DiceRoller.jsx'
 import EquipmentShop from './EquipmentShop.jsx'
+import GuideNote from './GuideNote.jsx'
 import { CLASSES } from '../data/classes.js'
 
 const EMPTY_DRAFT = { name: '', class: null, gold: null, equipment: [] }
@@ -101,12 +102,39 @@ function PartyBuilder({ party, onChangeParty }) {
             />
           </div>
 
-          <ClassSelector value={draft.class} onChange={(cls) => setDraft((d) => ({ ...d, class: cls }))} />
+          <div className="space-y-2">
+            <ClassSelector value={draft.class} onChange={(cls) => setDraft((d) => ({ ...d, class: cls }))} />
+            <GuideNote title="Choosing a Class">
+              Class sets your hero's starting Hit Points (shown on each card) —
+              higher HP means they can survive more hits before falling in
+              combat. Warriors and Barbarians are tough front-line fighters;
+              Wizards are fragile but bring magic the party can't get any other
+              way (like <em>Study the Rune</em> later in the dungeon).
+            </GuideNote>
+          </div>
 
-          <DiceRoller gold={draft.gold} onRoll={(gold) => setDraft((d) => ({ ...d, gold, equipment: [] }))} />
+          <div className="space-y-2">
+            <DiceRoller gold={draft.gold} onRoll={(gold) => setDraft((d) => ({ ...d, gold, equipment: [] }))} />
+            <GuideNote title="Starting Gold">
+              Every hero rolls 2 six-sided dice and multiplies the total by 10
+              for their starting gold (2–12 → 20–120 gold). This is the wealth
+              you'll spend below on gear before setting out — re-rolling
+              always clears anything already bought, so roll before you shop.
+            </GuideNote>
+          </div>
 
           {draft.gold != null && (
-            <EquipmentShop gold={draft.gold} equipment={draft.equipment} onBuy={buyItem} onSell={sellItem} />
+            <div className="space-y-2">
+              <EquipmentShop gold={draft.gold} equipment={draft.equipment} onBuy={buyItem} onSell={sellItem} />
+              <GuideNote title="Equipping Your Hero">
+                Gear isn't just flavor — a Shield or Armor makes you harder to
+                hit, a Healing Potion can save your life mid-dungeon (drink it
+                from the party tracker once you're on the adventure), and a
+                Torch or Rope help with hazards the rulebook describes outside
+                this tutorial's scope. Buy what fits your class and budget;
+                you can always sell back before saving.
+              </GuideNote>
+            </div>
           )}
 
           <div className="flex gap-3 pt-1">

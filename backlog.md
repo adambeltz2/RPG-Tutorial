@@ -228,7 +228,29 @@ they're discovered, instead of being implemented ad hoc.)_
   mark). Verified with Playwright that the full playthrough, dice-roll
   banner, and party-wipe screens all still render correctly and legibly.)
 
-Every actionable item logged to date is complete as of PR #21 — the only
+Every actionable item logged to date was complete as of PR #21. New item
+below, added per direct user request rather than discovered incidentally:
+
+- [x] [FEATURE] Make the experience guide-heavy: explicitly walk the player
+  through Setup and each scenario turn, explaining what's happening and why
+  in Four Against Darkness terms, not just narrating the story. Affected
+  files: `src/components/GuideNote.jsx` (new), `src/App.jsx`,
+  `src/components/PartyBuilder.jsx`, `src/engine/ScenarioEngine.jsx`,
+  `src/data/scenarios/intro.json`, `CLAUDE.md`. (PR #22 — added a reusable
+  `GuideNote` callout component (dashed border, "📖 [title]" label,
+  visually distinct from the game's own `fantasy-panel` UI elements) and
+  used it in two places: (1) Character Creation now opens with a Setup
+  overview, plus a `GuideNote` under each of Class/Gold/Equipment
+  explaining what that step means and why it matters; (2) every scenario
+  node in `intro.json` gained a `turn` number (shown as a "TURN N" label)
+  and a `guide` string explaining the FAD mechanic behind that turn,
+  rendered by `ScenarioEngine` beneath the narrative text. Chose to keep
+  the underlying choice-based engine as-is rather than rebuilding around
+  literal per-hero combat rounds, per explicit user decision when asked.
+  Verified with Playwright across the full playthrough, both class-gated
+  and Wizard-present paths, and the party-wipe screen.)
+
+Every actionable item logged to date is complete as of PR #22 — the only
 open entry left is the `[PROCESS]` note above, which is informational (a
 lesson learned) rather than something to build. New work starts fresh here
 as it's discovered.

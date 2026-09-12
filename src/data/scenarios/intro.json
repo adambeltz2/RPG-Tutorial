@@ -3,14 +3,18 @@
   "nodes": {
     "entrance": {
       "id": "entrance",
+      "turn": 1,
       "text": "Your party of four stands before the crumbling entrance to an old dungeon. Torchlight flickers somewhere deep inside.",
+      "guide": "Every Four Against Darkness adventure starts right here, at the dungeon door. The game unfolds in turns: each one presents a situation and asks you to choose an action — exactly what you're about to do below.",
       "choices": [
         { "label": "Enter the dungeon", "nextNode": "corridor_fork" }
       ]
     },
     "corridor_fork": {
       "id": "corridor_fork",
+      "turn": 2,
       "text": "Just inside, the corridor splits: one way flickers with torchlight, the other is shrouded in quiet darkness. Exploration is part of the adventure — different paths lead to different risks.",
+      "guide": "Choices like this show up constantly in FAD — the game often hands you multiple routes with different risk levels and lets you decide. There's no single correct answer, just like at the tabletop.",
       "choices": [
         { "label": "Head toward the torchlight", "nextNode": "corridor_trap" },
         { "label": "Slip through the quiet darkness", "nextNode": "quiet_passage" }
@@ -18,14 +22,18 @@
     },
     "quiet_passage": {
       "id": "quiet_passage",
+      "turn": 3,
       "text": "You creep through the dark passage undetected. No traps here — but you can't be sure what's waiting ahead either.",
+      "guide": "This turn resolved with no roll and no cost — a stand-in for a random room draw that turns out uneventful. Not every turn in the real game needs a fight or a trap; some are just progress.",
       "choices": [
         { "label": "Continue deeper", "nextNode": "goblin_room" }
       ]
     },
     "corridor_trap": {
       "id": "corridor_trap",
+      "turn": 3,
       "text": "The corridor floor is covered in strange tiles. One looks slightly loose — it might be a pressure-plate trap. This is your first lesson: not every hazard needs to be fought.",
+      "guide": "This is a Trap turn. The rulebook usually resolves traps with a skill check; here your choice stands in for that check. Caution is almost always the safer play against a hazard you haven't identified.",
       "choices": [
         { "label": "Carefully step around it", "nextNode": "trap_avoided" },
         { "label": "Push forward without checking", "nextNode": "trap_triggered", "effect": { "hpDelta": -1, "target": "random" } }
@@ -33,21 +41,27 @@
     },
     "trap_avoided": {
       "id": "trap_avoided",
+      "turn": 4,
       "text": "You spot the trigger and step over it safely. The party presses on unharmed.",
+      "guide": "No roll, no cost — spotting a hazard by paying attention is free in FAD. Compare this outcome to the alternate path; that's the kind of trade-off traps are built around.",
       "choices": [
         { "label": "Continue deeper", "nextNode": "goblin_room" }
       ]
     },
     "trap_triggered": {
       "id": "trap_triggered",
+      "turn": 4,
       "text": "The tile clicks. A dart shoots from the wall and catches one of your heroes! A small price for the lesson: always check for traps.",
+      "guide": "Triggering a trap cost your party 1 HP on a random hero. This is FAD's core risk/reward loop in miniature: rushing forward is tempting, but it spends a resource (HP) you'll want later.",
       "choices": [
         { "label": "Continue deeper", "nextNode": "goblin_room" }
       ]
     },
     "goblin_room": {
       "id": "goblin_room",
+      "turn": 5,
       "text": "Two goblins turn and snarl at you. They are Level 3 minions. Combat, bribery, and fleeing are all valid tactics — Four Against Darkness rewards good judgement over brute force.",
+      "guide": "This is a full Encounter turn — the heart of the game. You have three standard responses: Fight (roll to resolve combat), Bribe (spend gold to skip the fight entirely), or Flee (retreat and try a different approach). All three are equally legitimate strategies.",
       "choices": [
         {
           "label": "Fight them (Roll Attack)",
@@ -65,35 +79,45 @@
     },
     "goblin_fight_resolution": {
       "id": "goblin_fight_resolution",
+      "turn": 6,
       "text": "You roll to attack and the goblins fall before your blades! The path ahead is clear.",
+      "guide": "You resolved combat with a single attack roll (needing 4+ on a d6) for the whole party. The full rulebook runs combat in rounds with each hero rolling separately — this tutorial simplifies that down to one roll so the lesson stays clear.",
       "choices": [
         { "label": "Continue to the treasure room", "nextNode": "treasure_room" }
       ]
     },
     "goblin_fight_setback": {
       "id": "goblin_fight_setback",
+      "turn": 6,
       "text": "Your attack goes wide and a goblin's blade catches one of your heroes before you finish them off. Combat always carries risk — that's why bribery and fleeing are on the table too.",
+      "guide": "A failed attack roll still costs you — here, 1 HP to a random hero. This is exactly why Bribe and Flee exist as real alternatives, not just flavor options: combat in FAD is never a guaranteed win.",
       "choices": [
         { "label": "Continue to the treasure room", "nextNode": "treasure_room" }
       ]
     },
     "goblin_bribe_success": {
       "id": "goblin_bribe_success",
+      "turn": 6,
       "text": "The goblins snatch the gold and scurry off, leaving the path clear without a single blow struck.",
+      "guide": "Bribing trades gold for safety instead of risking HP. It's a completely legitimate FAD tactic — sometimes the smartest play is to not fight at all.",
       "choices": [
         { "label": "Continue to the treasure room", "nextNode": "treasure_room" }
       ]
     },
     "goblin_flee": {
       "id": "goblin_flee",
+      "turn": 6,
       "text": "You beat a hasty retreat back down the corridor, goblins hooting behind you. Fleeing is always an option when the odds look bad — regrouping and trying another approach beats a bad fight.",
+      "guide": "Fleeing costs you a turn but nothing else — no HP, no gold. In FAD, retreating from a bad fight and regrouping is always on the table; living to try again beats a costly win.",
       "choices": [
         { "label": "Regroup and try another path", "nextNode": "corridor_fork" }
       ]
     },
     "treasure_room": {
       "id": "treasure_room",
+      "turn": 7,
       "text": "Beyond the goblins lies a small chest and a shimmering rune etched into the far wall.",
+      "guide": "Clearing an encounter often reveals Treasure — FAD's reward loop for taking the risk. If your party includes a Wizard, you'll also see a class-specific option here; certain challenges favor certain classes, which is part of why party composition matters during Setup.",
       "choices": [
         { "label": "Open the chest", "nextNode": "treasure_found", "effect": { "goldDelta": 30, "itemsGranted": ["Masterwork Dagger"] } },
         { "label": "Study the rune with Magic", "nextNode": "magic_lesson", "requiresClass": "Wizard" }
@@ -101,20 +125,25 @@
     },
     "magic_lesson": {
       "id": "magic_lesson",
+      "turn": 8,
       "text": "Your Wizard channels arcane energy to decipher the rune, revealing a hidden catch on the chest. Magic can solve problems combat cannot.",
+      "guide": "Magic-using classes can interact with the world in ways others can't — here, your Wizard solves a puzzle with no roll and no risk. This is why a well-rounded party often out-performs four heroes of the same class.",
       "choices": [
         { "label": "Open the chest", "nextNode": "treasure_found", "effect": { "goldDelta": 30, "itemsGranted": ["Masterwork Dagger"] } }
       ]
     },
     "treasure_found": {
       "id": "treasure_found",
+      "turn": 9,
       "text": "Inside the chest: a stash of gold, split evenly among your party, and a masterwork dagger tucked beneath it. Tutorial complete — you've learned the basics: combat, traps, fleeing, and magic.",
+      "guide": "You've now played the full loop that makes up every FAD turn: face a situation, choose an action, deal with the consequences, and claim the reward. The complete game repeats this pattern across many more rooms, encounters, and dungeon levels than this tutorial covers.",
       "choices": [],
       "isEnd": true
     },
     "party_wiped": {
       "id": "party_wiped",
       "text": "Your entire party has fallen. Four Against Darkness is unforgiving that way — but every defeat is a lesson for the next attempt.",
+      "guide": "A full party wipe ends the adventure, but Four Against Darkness is built to be replayed quickly — restarting with a different strategy is part of the experience, not a failure.",
       "choices": [],
       "isEnd": true
     }

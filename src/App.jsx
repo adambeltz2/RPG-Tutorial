@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import PartyBuilder from './components/PartyBuilder.jsx'
+import GuideNote from './components/GuideNote.jsx'
 import ScenarioEngine from './engine/ScenarioEngine.jsx'
 import introScenario from './data/scenarios/intro.json'
 import { loadSession, saveSession, clearSession } from './utils/storage.js'
@@ -53,7 +54,20 @@ function App() {
             <h2 className="font-heading text-xl tracking-wide text-ink-700 mb-4">
               ⚔️ Character Creation
             </h2>
-            <PartyBuilder party={party} onChangeParty={setParty} />
+            <GuideNote title="Setup — Building Your Party">
+              In Four Against Darkness, every adventure begins by assembling a
+              party of <strong>four</strong> heroes. Click each empty slot below
+              to create one: give them a name, pick a class (this decides their
+              starting Hit Points — how much damage they can take before
+              falling), roll for starting gold, and spend it in the equipment
+              shop. There's no wrong way to build a party, but a mix of classes
+              (a tough front-liner, a Wizard for magic, etc.) tends to handle
+              the dungeon's variety of threats better than four of the same
+              class.
+            </GuideNote>
+            <div className="mt-4">
+              <PartyBuilder party={party} onChangeParty={setParty} />
+            </div>
             <button
               type="button"
               className="mt-6 px-5 py-2 fantasy-panel font-heading tracking-wide text-ink-700 hover:bg-parchment-200 disabled:opacity-30 disabled:cursor-not-allowed"
