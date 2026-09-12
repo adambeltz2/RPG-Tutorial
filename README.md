@@ -28,11 +28,14 @@ magic, now with a fork, a flee-and-retry loop, and a fallen-party game-over
 state), a fantasy storybook visual theme, a GitHub Pages deploy workflow,
 `localStorage` session persistence across reloads, and real d6 dice-roll
 resolution for the combat choice — plus real reward mechanics (gold and
-item grants visible in `PartyTracker`) and a usable Healing Potion. Unit
-tests (Vitest) cover the pure logic modules and gate CI on every PR. The
-toolchain is fully current (Vite 8, Tailwind 4, `npm audit` clean) and
-every actionable item logged in `backlog.md` to date is done — see there
-for anything newly discovered, and `CHANGELOG.md` for a per-PR history.
+item grants visible in `PartyTracker`) and a usable Healing Potion. The
+experience is deliberately **guide-heavy**: Setup and every scenario turn
+carry a `GuideNote` callout explaining what's happening and why in Four
+Against Darkness terms, not just narrating the story. Unit tests (Vitest)
+cover the pure logic modules and gate CI on every PR. The toolchain is
+fully current (Vite 8, Tailwind 4, `npm audit` clean) and every actionable
+item logged in `backlog.md` to date is done — see there for anything newly
+discovered, and `CHANGELOG.md` for a per-PR history.
 
 ## Getting Started
 ```bash

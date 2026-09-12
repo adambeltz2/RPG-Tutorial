@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import PartyTracker from '../components/PartyTracker.jsx'
+import GuideNote from '../components/GuideNote.jsx'
 import { applyEffect, useHealingPotion } from './applyEffect.js'
 import { rollDie } from '../utils/dice.js'
 
@@ -45,6 +46,9 @@ function ScenarioEngine({ scenario, party, onUpdateParty, onRestart, initialNode
   return (
     <div className="grid grid-cols-1 md:grid-cols-[2fr_1fr] gap-6">
       <div className="fantasy-panel p-5 space-y-4">
+        {node.turn && (
+          <div className="font-heading text-xs tracking-widest text-ink-400 uppercase">Turn {node.turn}</div>
+        )}
         {lastRoll && (
           <p className={`text-sm font-heading tracking-wide ${lastRoll.success ? 'text-green-700' : 'text-red-700'}`}>
             🎲 Rolled {lastRoll.result} on d{lastRoll.sides} (needed {lastRoll.target}+) —{' '}
@@ -52,6 +56,8 @@ function ScenarioEngine({ scenario, party, onUpdateParty, onRestart, initialNode
           </p>
         )}
         <p className="leading-relaxed">{node.text}</p>
+
+        {node.guide && <GuideNote>{node.guide}</GuideNote>}
 
         {node.isEnd ? (
           <button

@@ -4,6 +4,44 @@ All notable changes to this project are logged here, one entry per PR.
 
 ## [Unreleased]
 
+### PR #22 — Guide-Heavy Setup and Turn-by-Turn Rules Teaching
+- Added `src/components/GuideNote.jsx`, a reusable callout (dashed border,
+  "📖 [title]" label) visually distinct from the game's own `fantasy-panel`
+  UI elements, for rules-teaching prose separate from narrative/story text.
+- Character Creation now opens with a Setup overview (`GuideNote` in
+  `App.jsx`) explaining party assembly, plus a `GuideNote` under each of
+  Class, Starting Gold, and Equipment in `PartyBuilder` explaining what
+  that step means and why it matters in FAD terms.
+- Every node in `src/data/scenarios/intro.json` gained a `turn` number
+  (shown by `ScenarioEngine` as a small "TURN N" label) and a `guide`
+  string explaining the actual FAD mechanic behind that turn — e.g. why
+  fight/bribe/flee are all legitimate, what a failed attack roll costs
+  and why, why fleeing is free. `ScenarioEngine` renders `node.guide` in
+  a `GuideNote` beneath the narrative text whenever present.
+- Documented the `turn`/`guide` node fields in `CLAUDE.md`'s Scenario Node
+  Example, framing the experience as deliberately guide-heavy.
+- Verified with Playwright across the full playthrough (including the
+  Wizard-gated and Wizard-less paths) and the party-wipe screen that guide
+  notes render correctly throughout without disrupting existing behavior;
+  all 26 existing tests still pass unchanged (this was a content/UI-only
+  change, no logic modified).
+- **Follow-up deepening pass (same PR):** per explicit user direction to
+  assume the player knows nothing — not just about this app, but about
+  tabletop RPGs and dice games in general — rewrote the guide text in three
+  places to define terms from scratch rather than assume familiarity:
+  the Character Creation `GuideNote` in `App.jsx` (now "Welcome — How This
+  Works," defining what FAD even is, "party," "class," "Hit Points (HP),"
+  "turn," and dice notation like "d6" before the player ever sees them
+  used); the "Choosing a Class" `GuideNote` in `PartyBuilder.jsx` (now
+  spells out that a "class" is a profession and what HP represents in
+  plain terms); and `goblin_room`'s `guide` string in
+  `src/data/scenarios/intro.json` (now explains "Level 3" is a
+  non-calculated difficulty label, and spells out the "roll 4+ on a d6"
+  combat mechanic instead of assuming the player already knows what a d6
+  is). Re-verified with Playwright (Welcome note and the goblin room turn)
+  and re-ran the full existing regression scripts; all 26 tests and the
+  production build still pass unchanged.
+
 ### PR #21 — Favicon and Real Equipment Rewards
 - Added an inline base64-encoded SVG favicon (a die emoji) via a
   `<link rel="icon">` in `index.html` — no separate asset file needed.

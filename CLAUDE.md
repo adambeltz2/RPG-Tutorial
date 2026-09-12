@@ -51,14 +51,16 @@ It is designed for **personal use** and built to run entirely in the browser wit
 ```json
 {
   "id": "goblin_room",
+  "turn": 5,
   "text": "Two goblins turn and snarl at you. They are Level 3 minions.",
+  "guide": "This is a full Encounter turn — the heart of the game. Fight, Bribe, and Flee are all equally legitimate strategies.",
   "choices": [
     { "label": "Fight them (Roll Attack)", "nextNode": "goblin_fight_resolution" },
     { "label": "Bribe them (Costs 10 Gold)", "nextNode": "goblin_bribe_success" }
   ]
 }
 ```
-A node with `"isEnd": true` and `"choices": []` ends the run (`ScenarioEngine` shows a "Restart Tutorial" button instead of choices).
+A node with `"isEnd": true` and `"choices": []` ends the run (`ScenarioEngine` shows a "Restart Tutorial" button instead of choices). Both `turn` (a number, shown as a small "TURN N" label) and `guide` (rules-teaching prose, rendered by `src/components/GuideNote.jsx` in a distinct dashed-border callout, separate from the narrative `text`) are optional but expected on every real node — the experience is meant to be **guide-heavy**: `text` tells the story, `guide` explains what's actually happening in Four Against Darkness terms and why the choice matters, turn by turn. `PartyBuilder`'s Setup screen follows the same pattern with its own `GuideNote`s per step (class, gold, equipment).
 
 **Choice Schema Extensions:** a `choice` normally just picks a fixed `nextNode`, but can opt into either of the following (resolved in `ScenarioEngine.choose()`, applied via `src/engine/applyEffect.js`):
 *   **`effect`** — mutates party state as a side effect of taking this choice, instead of (or in addition to) just branching narrative:
